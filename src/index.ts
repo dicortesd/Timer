@@ -20,9 +20,13 @@ app.get('/', (req, res) => {
 
 // Require usuario routes
 import {default as usuarioRoutes} from './routes/usuario.routes';
+import {default as clienteRoutes} from './routes/cliente.routes';
+import {default as proyectoRoutes} from './routes/proyecto.routes';
 
 // using as middleware
 app.use('/usuarios', usuarioRoutes);
+app.use('/clientes', clienteRoutes);
+app.use('/proyectos', proyectoRoutes);
 
 // listen for requests
 app.listen(port, () => {  

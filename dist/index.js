@@ -19,8 +19,12 @@ app.get('/', (req, res) => {
 });
 // Require usuario routes
 const usuario_routes_1 = __importDefault(require("./routes/usuario.routes"));
+const cliente_routes_1 = __importDefault(require("./routes/cliente.routes"));
+const proyecto_routes_1 = __importDefault(require("./routes/proyecto.routes"));
 // using as middleware
 app.use('/usuarios', usuario_routes_1.default);
+app.use('/clientes', cliente_routes_1.default);
+app.use('/proyectos', proyecto_routes_1.default);
 // listen for requests
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
