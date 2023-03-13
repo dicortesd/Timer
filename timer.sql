@@ -49,8 +49,10 @@ DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE `clientes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(128) NOT NULL,
+  `correo` varchar(128) NOT NULL,
+  `direccion` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,6 +61,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+INSERT INTO `clientes` VALUES (1,'aplik','apli-k@aplik.com','km2 via TubingenMannheim');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,10 +76,11 @@ CREATE TABLE `proyectos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_cliente` int(11) NOT NULL,
   `nombre` varchar(128) NOT NULL,
+  `descripcion` text,
   PRIMARY KEY (`id`),
   KEY `proyectos_FK_1` (`id_cliente`),
   CONSTRAINT `proyectos_FK_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,6 +89,7 @@ CREATE TABLE `proyectos` (
 
 LOCK TABLES `proyectos` WRITE;
 /*!40000 ALTER TABLE `proyectos` DISABLE KEYS */;
+INSERT INTO `proyectos` VALUES (1,1,'Trabajo exxtra dificil','aaaaaahh');
 /*!40000 ALTER TABLE `proyectos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,6 +123,33 @@ LOCK TABLES `tareas` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tiempos`
+--
+
+DROP TABLE IF EXISTS `tiempos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tiempos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tarea` int(11) NOT NULL,
+  `inicio` datetime NOT NULL,
+  `final` datetime DEFAULT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `observaciones` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tiempos`
+--
+
+LOCK TABLES `tiempos` WRITE;
+/*!40000 ALTER TABLE `tiempos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tiempos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuarios`
 --
 
@@ -145,31 +177,30 @@ INSERT INTO `usuarios` VALUES (1,'Kilyan','Mbappe','kmbappe@psg.com','admin'),(3
 UNLOCK TABLES;
 
 --
--- Table structure for table `usuarios_clientes`
+-- Table structure for table `usuarios_proyectos`
 --
 
-DROP TABLE IF EXISTS `usuarios_clientes`;
+DROP TABLE IF EXISTS `usuarios_proyectos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuarios_clientes` (
+CREATE TABLE `usuarios_proyectos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
+  `id_proyecto` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `usuarios_clientes_FK` (`id_usuario`),
-  KEY `usuarios_clientes_FK_1` (`id_cliente`),
-  CONSTRAINT `usuarios_clientes_FK` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
-  CONSTRAINT `usuarios_clientes_FK_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id`)
+  KEY `usuarios_clientes_FK_1` (`id_proyecto`),
+  CONSTRAINT `usuarios_clientes_FK` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuarios_clientes`
+-- Dumping data for table `usuarios_proyectos`
 --
 
-LOCK TABLES `usuarios_clientes` WRITE;
-/*!40000 ALTER TABLE `usuarios_clientes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `usuarios_clientes` ENABLE KEYS */;
+LOCK TABLES `usuarios_proyectos` WRITE;
+/*!40000 ALTER TABLE `usuarios_proyectos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuarios_proyectos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -181,4 +212,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-06 22:37:02
+-- Dump completed on 2023-03-12 21:32:08
