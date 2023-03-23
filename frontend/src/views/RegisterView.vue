@@ -1,65 +1,83 @@
 <template>
-    <div>
-      <h1>Register</h1>
+    <div class="container">
       <form>
-        <div class="form-group">
-          <label for="nombre">Nombre:</label>
-          <input type="text" class="form-control" id="nombre" v-model="form.nombre" required>
-        </div>
-        <div class="form-group">
-          <label for="correo">Correo electrónico:</label>
-          <input type="email" class="form-control" id="correo" v-model="form.correo" required>
-        </div>
-        <div class="form-group">
-          <label for="contrasena">Contraseña:</label>
-          <input type="password" class="form-control" id="contrasena" v-model="form.contrasena" required>
-        </div>
-        <div class="form-group">
-          <label for="roi">ROI/Cargo:</label>
-          <input type="text" class="form-control" id="roi" v-model="form.roi" required>
-        </div>
-        <div class="form-group">
-          <label for="empresa">Empresa:</label>
-          <input type="text" class="form-control" id="empresa" v-model="form.empresa" required>
-        </div>
-        <div class="form-group">
-          <label for="confirma-contrasena">Confirma contraseña:</label>
-          <input type="password" class="form-control" id="confirma-contrasena" v-model="form.confirmaContrasena" required>
-        </div>
-        <button type="submit" class="btn btn-primary" @click.prevent="onSubmit">Submit</button>
+        <table>
+          <tr>
+            <td><label>Nombre</label></td>
+            <td><input type="text" v-model="form.nombre"></td>
+            <td><label>Roi/cargo</label></td>
+            <td><input type="text" v-model="form.roi"></td>
+          </tr>
+          <tr>
+            <td><label>Correo electronico</label></td>
+            <td><input type="email" v-model="form.email"></td>
+            <td><label>Empresa</label></td>
+            <td><input type="text" v-model="form.empresa"></td>
+          </tr>
+          <tr>
+            <td><label>Contrasena</label></td>
+            <td><input type="password" v-model="form.password"></td>
+            <td><label>Confirmar contrasena</label></td>
+            <td><input type="password" v-model="form.confirmPassword"></td>
+          </tr>
+        </table>
+        <button type="submit" class="btn btn-primary">Register</button>
       </form>
     </div>
   </template>
   
   <script lang="ts">
-  import { defineComponent, reactive } from 'vue';
+  import { defineComponent, reactive } from 'vue'
   
   export default defineComponent({
     name: 'RegisterView',
     setup() {
       const form = reactive({
         nombre: '',
-        correo: '',
-        contrasena: '',
         roi: '',
+        email: '',
         empresa: '',
-        confirmaContrasena: '',
-      });
+        password: '',
+        confirmPassword: '',
+      })
   
       const onSubmit = () => {
-        // Handle form submission
-      };
+        console.log('Form submitted')
+      }
   
-      return { form, onSubmit };
+      return { form, onSubmit }
     },
-  });
+  })
   </script>
   
   <style scoped>
-  .form-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+  
+  input[type='text'],
+  input[type='email'],
+  input[type='password'] {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+  }
+  
+  button[type='submit'] {
+    display: block;
+    margin-top: 1rem;
   }
   </style>
   
