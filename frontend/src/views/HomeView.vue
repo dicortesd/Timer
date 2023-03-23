@@ -10,6 +10,7 @@ import { defineComponent } from 'vue';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import CreateProject from '@/components/CreateProject.vue'
 
+import LoginComponent from '@/components/LoginCompo.vue'; // @ is an alias to /src
 
 export default defineComponent({
   name: 'HomeView',
