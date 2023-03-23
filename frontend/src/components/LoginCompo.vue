@@ -39,7 +39,7 @@
         password: '',
       })
   
-      //const router = useRouter()
+      const router = useRouter()
   
       const onSubmit = () => {
   
@@ -48,7 +48,7 @@
       }
   
       const onRegisterClick = () => {
-        //router.push('/register') // redirige vers la page '/register'
+        router.push('/register') // redirige vers la page '/register'
       }
   
       return { form, onSubmit, onRegisterClick }
