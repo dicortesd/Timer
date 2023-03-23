@@ -13,8 +13,8 @@
       <router-link to="/profile" class="btn btn-link">
         <font-awesome-icon :icon="['fas', 'user']"/>
       </router-link>
-      <a href="#"><font-awesome-icon :icon="['fab', 'twitter']"/></a>
-      <a href="#"><font-awesome-icon :icon="['fab', 'facebook']"/></a>
+      <a href="#"><font-awesome-icon :icon="['fas ', 'search']"/></a>
+      <a href="#"><font-awesome-icon :icon="['fas', 'envelope']"/></a>
     </div>
   </div>
 </template>

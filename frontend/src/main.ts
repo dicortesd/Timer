@@ -8,6 +8,9 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 /* add some free styles */
+import { faChartPie } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
@@ -19,7 +22,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
 /* add each imported icon to the library */
-library.add(faTwitter,faHome,faFacebook,faUser )
+library.add(faTwitter,faHome,faFacebook,faUser,faSearch, faEnvelope, faChartPie )
 
 
 createApp(App)
