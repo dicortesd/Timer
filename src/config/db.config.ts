@@ -1,5 +1,7 @@
 import * as mysql from 'mysql';
 
+//test
+
 //local mysql db connection
 export const dbConn = mysql.createConnection({
     host : 'localhost',
