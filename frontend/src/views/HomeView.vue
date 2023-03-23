@@ -1,9 +1,10 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <LoginComponent msg="Test de site"/>
+    <img alt="Vue logo" src="../assets/logo.png" style="width: 200px;">
+    <CreateProject msg="Test de site"/>
   </div>
 </template>
+
 
 <script lang="ts">
 import { defineComponent } from 'vue';
