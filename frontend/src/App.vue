@@ -4,9 +4,38 @@
     <router-link to="/register">Register</router-link>
   </nav>
   <router-view/>
+  <div class="banner">
+  <a href="#"><font-awesome-icon :icon="['fas', 'home']"/></a>
+  <a href="#"><font-awesome-icon :icon="['fas', 'user']"/></a>
+  <a href="#"><font-awesome-icon :icon="['fab', 'twitter']"/></a>
+  <a href="#"><font-awesome-icon :icon="['fab', 'facebook']"/></a>
+</div>
 </template>
 
 <style>
+.banner {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 70px;
+  background-color: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner a {
+  margin-bottom: 20px;
+  color: #444;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.banner a:hover {
+  color: #007bff;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
