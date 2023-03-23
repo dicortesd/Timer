@@ -53,6 +53,7 @@
           roi: form.roi
 
         })
+        /*
         create(user)
         .then(response => {
           console.log(response.data);
@@ -61,6 +62,7 @@
           console.log(error.response.data);
         });
 
+        */
 
       }
   
