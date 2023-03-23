@@ -2,15 +2,23 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/register">Register</router-link>
+
   </nav>
   <router-view/>
-  <div class="banner">
-  <a href="#"><font-awesome-icon :icon="['fas', 'home']"/></a>
-  <a href="#"><font-awesome-icon :icon="['fas', 'user']"/></a>
-  <a href="#"><font-awesome-icon :icon="['fab', 'twitter']"/></a>
-  <a href="#"><font-awesome-icon :icon="['fab', 'facebook']"/></a>
-</div>
+  <div class="app-container">
+    <div class="banner">
+      <router-link to="/" class="btn btn-link">
+        <font-awesome-icon :icon="['fas', 'home']"/>
+      </router-link>
+      <router-link to="/profile" class="btn btn-link">
+        <font-awesome-icon :icon="['fas', 'user']"/>
+      </router-link>
+      <a href="#"><font-awesome-icon :icon="['fab', 'twitter']"/></a>
+      <a href="#"><font-awesome-icon :icon="['fab', 'facebook']"/></a>
+    </div>
+  </div>
 </template>
+
 
 <style>
 .banner {
