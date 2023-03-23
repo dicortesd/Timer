@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="top-banner">
-      <div class="app-title">Mon application</div>
+      <div class="app-title">Empresa Test</div>
       <a href="#"><font-awesome-icon :icon="['fas', 'bell']"/></a>
       <a href="#"><font-awesome-icon :icon="['fas', 'user']"/></a>
     </div>

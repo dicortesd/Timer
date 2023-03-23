@@ -15,7 +15,7 @@ import LoginComponent from '@/components/LoginCompo.vue'; // @ is an alias to /s
 export default defineComponent({
   name: 'HomeView',
   components: {
-    CreateProject,
+    LoginComponent,
   },
 });
 </script>
