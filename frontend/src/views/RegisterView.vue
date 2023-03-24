@@ -26,8 +26,11 @@
     </div>
   </template>
   
+
   <script lang="ts">
   import { defineComponent, reactive } from 'vue'
+  import { create, findAll } from '../../../Backend/src/controllers/usuario.controller';
+
   
   export default defineComponent({
     name: 'RegisterView',
@@ -42,7 +45,25 @@
       })
   
       const onSubmit = () => {
-        console.log('Form submitted')
+        const mots = form.nombre.split(" ");
+        const user = ({
+          nombre: mots[0],
+          apellido: mots.slice(1).join(" "),
+          correo: form.email,
+          roi: form.roi
+
+        })
+        /*
+        create(user)
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error.response.data);
+        });
+
+        */
+
       }
   
       return { form, onSubmit }

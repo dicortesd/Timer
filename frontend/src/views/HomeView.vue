@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" style="width: 200px;">
-    <CreateProject msg="Test de site"/>
+    <LoginComponent msg="Test de site"/>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ import LoginComponent from '@/components/LoginCompo.vue'; // @ is an alias to /s
 export default defineComponent({
   name: 'HomeView',
   components: {
-    CreateProject,
+    LoginComponent,
   },
 });
 </script>
