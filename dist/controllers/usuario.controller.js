@@ -1,7 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove = exports.update = exports.findById = exports.create = exports.findAll = void 0;
+exports.remove = exports.update = exports.findById = exports.create = exports.findAll = exports.verifyLogin = void 0;
 const usuario_model_1 = require("../models/usuario.model");
+const verifyLogin = function (req, res) {
+    if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+        res.status(400).send({ error: true, message: 'Por favor provea todos los campos requeridos.' });
+    }
+    else {
+        usuario_model_1.Usuario.verifyLogin(req.body, function (err, resultado) {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                console.log(resultado);
+                res.json(resultado);
+            }
+        });
+    }
+};
+exports.verifyLogin = verifyLogin;
 const findAll = function (req, res) {
     usuario_model_1.Usuario.findAll(function (err, usuario) {
         console.log('controller');

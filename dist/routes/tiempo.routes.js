@@ -27,17 +27,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
-const usuarioController = __importStar(require("../controllers/usuario.controller"));
+const tiempoController = __importStar(require("../controllers/tiempo.controller"));
 // Devuelva todos los usuarios
-router.get('/', usuarioController.findAll);
+router.get('/', tiempoController.findAll);
 // Cree un nuevo usuario
-router.post('/', usuarioController.create);
-// Verificar usuario
-router.post('/verify/', usuarioController.verifyLogin);
+router.post('/', tiempoController.create);
 // Retrieve a single usuario with id
-router.get('/:id', usuarioController.findById);
+router.get('/:id', tiempoController.findById);
 // Update a usuario with id
-router.put('/:id', usuarioController.update);
+router.put('/:id', tiempoController.update);
 // Delete a usuario with id
-router.delete('/:id', usuarioController.remove);
+router.delete('/:id', tiempoController.remove);
 module.exports = router;

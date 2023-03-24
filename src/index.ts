@@ -22,11 +22,20 @@ app.get('/', (req, res) => {
 import {default as usuarioRoutes} from './routes/usuario.routes';
 import {default as clienteRoutes} from './routes/cliente.routes';
 import {default as proyectoRoutes} from './routes/proyecto.routes';
+import {default as tareaRoutes} from './routes/tarea.routes';
+import {default as categoriaRoutes} from './routes/categoria.routes';
+import {default as tiempoRoutes} from './routes/tiempo.routes';
+
+
 
 // using as middleware
 app.use('/usuarios', usuarioRoutes);
 app.use('/clientes', clienteRoutes);
 app.use('/proyectos', proyectoRoutes);
+app.use('/tareas', tareaRoutes);
+app.use('/categoriass', categoriaRoutes);
+app.use('/tiempos', tiempoRoutes);
+
 
 // listen for requests
 app.listen(port, () => {  

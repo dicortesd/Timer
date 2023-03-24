@@ -21,10 +21,16 @@ app.get('/', (req, res) => {
 const usuario_routes_1 = __importDefault(require("./routes/usuario.routes"));
 const cliente_routes_1 = __importDefault(require("./routes/cliente.routes"));
 const proyecto_routes_1 = __importDefault(require("./routes/proyecto.routes"));
+const tarea_routes_1 = __importDefault(require("./routes/tarea.routes"));
+const categoria_routes_1 = __importDefault(require("./routes/categoria.routes"));
+const tiempo_routes_1 = __importDefault(require("./routes/tiempo.routes"));
 // using as middleware
 app.use('/usuarios', usuario_routes_1.default);
 app.use('/clientes', cliente_routes_1.default);
 app.use('/proyectos', proyecto_routes_1.default);
+app.use('/tareas', tarea_routes_1.default);
+app.use('/categoriass', categoria_routes_1.default);
+app.use('/tiempos', tiempo_routes_1.default);
 // listen for requests
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
