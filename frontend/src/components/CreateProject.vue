@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-5 offset-md-1">
         <div class="card">
           <div class="card-header">
             <h5 class="mb-0">Información del proyecto</h5>
@@ -23,26 +23,6 @@
                 <label for="projectDescription">Descripción:</label>
                 <textarea id="projectDescription" class="form-control" v-model="projectDescription"></textarea>
               </div>
-              <button type="submit" class="btn btn-primary btn-block mt-4">Crear</button>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card">
-            <div class="card-header">
-              <ul class="nav nav-tabs card-header-tabs">
-                <li class="nav-item">
-                  <a class="nav-link" href="#" @click="selectedTab = 'fecha'">Fecha de entrega</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active" href="#" @click="selectedTab = 'objetivos'">Objetivos</a>
-                </li>
-              </ul>
-            </div>
-            <div class="card-body">
-              <div v-show="selectedTab === 'fecha'">
                 <div class="form-group">
                   <label for="projectDueDate">Fecha de entrega:</label>
                   <select id="projectDueDate" class="form-control" v-model="projectDueDate">
@@ -50,21 +30,32 @@
                     <option v-for="date in dueDates" :key="date">{{ date }}</option>
                   </select>
                 </div>
-              </div>
-              <div v-show="selectedTab === 'objetivos'">
+              <button type="submit" class="btn btn-primary btn-block mt-4">Crear</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 offset-md-1">
+        <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Información adicional</h5>
                 <div class="form-group">
                   <label for="projectGoals">Objetivos:</label>
-                  <textarea id="projectGoals" class="form-control" v-model="projectGoals"></textarea>
+                  <select id="projectGoals" class="form-control" v-model="projectGoals">
+                  <option value="">-- Seleccionar un objetivo --</option>
+                  <option v-for="objetivo in Objetivos" :key="objetivo.id" :value="objetivo.id">{{ objetivo.name }}</option>
+                </select>
+                </div>
+              </div>
+                <div class="form-group">
+                  <label for="projectNotes">Notas:</label>
+                  <textarea id="projectNotes" class="form-control" v-model="projectNotes"></textarea>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 </template>
-
 <script>
 export default {
   data() {
@@ -77,6 +68,11 @@ export default {
         { id: 1, name: 'Juan' },
         { id: 2, name: 'Maria' },
         { id: 3, name: 'Pedro' }
+      ],
+      Objetivos: [
+        { id: 1, name: 'Efficienca'},
+        { id: 2, name: 'Rapidez'},
+        { id: 3, name: 'Cualidad'}
       ],
       dueDates: [
         '1 semana',
@@ -98,7 +94,6 @@ export default {
       this.projectDescription = '';
       this.projectAssignee = '';
       this.projectDueDate = '';
-      this.proje
     }
   }
 }
