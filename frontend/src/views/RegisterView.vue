@@ -29,10 +29,8 @@
 
   <script lang="ts">
   import { defineComponent, reactive } from 'vue'
-  import { Usuario } from '../../../Backend/src/models/usuario.model';
-  import { create} from '../../../Backend/src/controllers/usuario.controller';
-  import axios from 'axios';
-  
+
+
   export default defineComponent({
     name: 'RegisterView',
     setup() {
@@ -45,22 +43,12 @@
         confirmPassword: '',
       })
   
-      const onSubmit = async () => {
-        const mots = form.nombre.split(" ");
-        const newUser: Usuario = {
-          nombre: mots[0],
-          apellido: mots.slice(1).join(" "),
-          correo: form.email,
-          rol: form.roi
-  };
+      const onSubmit = {
+        
+        
+  }
 
-      try {
-        const response = await axios.post('/api/usuarios', newUser);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-}
+  
 
     
 
