@@ -80,7 +80,7 @@ CREATE TABLE `proyectos` (
   PRIMARY KEY (`id`),
   KEY `proyectos_FK_1` (`id_cliente`),
   CONSTRAINT `proyectos_FK_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `proyectos` (
 
 LOCK TABLES `proyectos` WRITE;
 /*!40000 ALTER TABLE `proyectos` DISABLE KEYS */;
-INSERT INTO `proyectos` VALUES (1,1,'Trabajo exxtra dificil','aaaaaahh');
+INSERT INTO `proyectos` VALUES (1,1,'Trabajo exxtra dificil','aaaaaahh'),(2,1,'Trabajo regular','aaaaaahh');
 /*!40000 ALTER TABLE `proyectos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,8 +162,9 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(32) NOT NULL,
   `correo` varchar(128) NOT NULL,
   `rol` enum('admin','user') NOT NULL,
+  `contrasena` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +173,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Kilyan','Mbappe','kmbappe@psg.com','admin'),(3,'frank','rivas','rivas@psg.com','admin');
+INSERT INTO `usuarios` VALUES (1,'Kilyan','Mbappe','kmbappe@psg.com','admin',''),(3,'frank','rivas','rivas@psg.com','admin',''),(4,'frank','rivas','rivas@psg.com','admin',''),(5,'Frank','Ribery','rivas@psg.com','admin',''),(7,'Frank','Ribery 7','rivas@psg.com','admin',''),(8,'Frank','Ribery2','ribery@psg.com','admin','$2b$10$ywpseYSTlMqQY/bHa7Tq6e4PCNJZ/5..Xr.LlF.9KSt3a9KIrilDq');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,10 +189,10 @@ CREATE TABLE `usuarios_proyectos` (
   `id_usuario` int(11) NOT NULL,
   `id_proyecto` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `usuarios_clientes_FK` (`id_usuario`),
+  UNIQUE KEY `usuarios_proyectos_id_usuario_id_proyecto` (`id_usuario`,`id_proyecto`),
   KEY `usuarios_clientes_FK_1` (`id_proyecto`),
   CONSTRAINT `usuarios_clientes_FK` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,6 +201,7 @@ CREATE TABLE `usuarios_proyectos` (
 
 LOCK TABLES `usuarios_proyectos` WRITE;
 /*!40000 ALTER TABLE `usuarios_proyectos` DISABLE KEYS */;
+INSERT INTO `usuarios_proyectos` VALUES (1,5,1),(3,7,1),(24,7,8),(27,7,9),(28,8,1),(31,8,8),(32,8,9);
 /*!40000 ALTER TABLE `usuarios_proyectos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -212,4 +214,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-12 21:32:08
+-- Dump completed on 2023-03-24 14:05:44

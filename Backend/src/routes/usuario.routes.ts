@@ -9,6 +9,9 @@ router.get('/', usuarioController.findAll);
 // Cree un nuevo usuario
 router.post('/', usuarioController.create);
 
+// Verificar usuario
+router.post('/verify/', usuarioController.verifyLogin);
+
 // Retrieve a single usuario with id
 router.get('/:id', usuarioController.findById);
 
