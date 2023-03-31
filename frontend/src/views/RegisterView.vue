@@ -1,12 +1,13 @@
 <template>
     <div class="container">
-      <form>
+      <!--Se metió el form para activar el método submit cuando se espicha el botón de registrar-->
+      <form @submit.prevent="onSubmit">
         <table>
           <tr>
             <td><label>Nombre</label></td>
-            <td><input type="text" v-model="form.nombre"></td>
-            <td><label>Roi/cargo</label></td>
-            <td><input type="text" v-model="form.roi"></td>
+            <td><input type="text" v-model="form.nombre" required></td>
+            <td><label>Rol/cargo</label></td>
+            <td><input type="text" v-model="form.rol"></td>
           </tr>
           <tr>
             <td><label>Correo electronico</label></td>
@@ -16,9 +17,9 @@
           </tr>
           <tr>
             <td><label>Contrasena</label></td>
-            <td><input type="password" v-model="form.password"></td>
+            <td><input type="password" v-model="form.contrasena"></td>
             <td><label>Confirmar contrasena</label></td>
-            <td><input type="password" v-model="form.confirmPassword"></td>
+            <td><input type="password" v-model="form.confirmContrasena"></td>
           </tr>
         </table>
         <button type="submit" class="btn btn-primary">Register</button>
@@ -38,12 +39,12 @@
     setup() {
       const form = reactive({
         nombre: '',
-        roi: '',
+        rol: '',
         email: '',
         empresa: '',
-        password: '',
-        confirmPassword: '',
-      })
+        contrasena: '',
+        confirmContrasena: '',
+      });
   
       const onSubmit = async () => {
         const mots = form.nombre.split(" ");
@@ -51,19 +52,19 @@
           nombre: mots[0],
           apellido: mots.slice(1).join(" "),
           correo: form.email,
-          rol: form.roi
-  };
+          rol: form.rol,
+          contrasena: form.contrasena
+        };
 
-      try {
-        const response = await axios.post('/api/usuarios', newUser);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
+
+        try {
+          // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+          const response = await axios.post('http://localhost:3000/usuarios/', newUser);
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
       }
-}
-
-    
-
       return { form, onSubmit }
     },
   })

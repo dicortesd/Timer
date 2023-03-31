@@ -26,8 +26,13 @@ import {default as tareaRoutes} from './routes/tarea.routes';
 import {default as categoriaRoutes} from './routes/categoria.routes';
 import {default as tiempoRoutes} from './routes/tiempo.routes';
 
-
-
+// Se metió esta parte porque al hacer el llamado desde el frontend sacaba error de CORS
+// https://stackoverflow.com/a/34647929
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+  });
 // using as middleware
 app.use('/usuarios', usuarioRoutes);
 app.use('/clientes', clienteRoutes);
