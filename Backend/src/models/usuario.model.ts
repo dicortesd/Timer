@@ -37,7 +37,7 @@ export class Usuario {
                     result(null,"No existe el usuario.")
                 } else {
                     if(bcrypt.compareSync(userData.contrasena,res[0].contrasena)){
-                        result(null,{error:false, msg: "Exitoso", id_usuario: res[0].id});
+                        result(null,{error:false, msg: "Exitoso", usuario: res[0]});
                     } else {
                         result(null, {error: true, msg: "La contraseña no es"});
                     }
