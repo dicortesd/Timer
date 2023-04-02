@@ -47,7 +47,10 @@
       const onSubmit = async () => {
         const newLogin: Usuario={
           correo : form.correo,
-          contrasena : form.contrasena
+          contrasena : form.contrasena,
+          nombre: '',
+          apellido: '',
+          rol: ''
         }
         console.log(newLogin);
 
