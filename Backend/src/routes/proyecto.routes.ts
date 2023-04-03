@@ -2,20 +2,20 @@ import express, { Express, Request, Response } from 'express';
 const router = express.Router();
 import * as proyectoController from '../controllers/proyecto.controller';
 
-// Devuelva todos los usuarios
+// Devuelva todos los proyectos
 
 router.get('/', proyectoController.findAll);
 
-// Cree un nuevo usuario
+// Cree un nuevo proyecto
 router.post('/', proyectoController.create);
 
-// Retrieve a single usuario with id
+// Retrieve a single proyecto with id
 router.get('/:id', proyectoController.findById);
 
-// Update a usuario with id
+// Update a proyecto with id
 router.put('/:id', proyectoController.update);
 
-// Delete a usuario with id
+// Delete a proyecto with id
 router.delete('/:id', proyectoController.remove);
 
 export = router
