@@ -16,9 +16,9 @@
             <td><input type="text" v-model="form.empresa"></td>
           </tr>
           <tr>
-            <td><label>Contrasena</label></td>
+            <td><label>Contraseña</label></td>
             <td><input type="password" v-model="form.contrasena"></td>
-            <td><label>Confirmar contrasena</label></td>
+            <td><label>Confirmar contraseña</label></td>
             <td><input type="password" v-model="form.confirmContrasena"></td>
           </tr>
         </table>
