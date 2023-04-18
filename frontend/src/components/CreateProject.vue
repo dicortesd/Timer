@@ -21,9 +21,9 @@
               </div>
               <div class="form-group">
                 <label for="projectAssignee">Asignar a:</label>
-                <select id="projectAssignee" class="form-control" v-model="projectAssignee" multiple>
+                <select id="projectAssignee" class="form-control" v-model="usuarios" multiple>
                   <option value="">-- Seleccionar una persona --</option>
-                  <option v-for="usuario in usuarios" :key="usuario.id" :value="usuario.id">{{ usuario.nombre }} {{ usuario.apellido }}</option>
+                  <option v-for="usuario in usuariosTotalidad" :key="usuario.id" :value="usuario.id">{{ usuario.nombre }} {{ usuario.apellido }}</option>
                 </select>
               </div>
               <div class="form-group">
@@ -72,14 +72,14 @@ export default {
     return {
       nombre: '',
       descripcion: '',
-      projectAssignee: '',
+      usuarios: '',
       projectDueDate: '',
       clientes: [
         { id: 1, nombre: 'Cliente1' },
         { id: 2, nombre: 'Cliente2' },
         { id: 3, nombre: 'Cliente3' }
       ],
-      usuarios: [
+      usuariosTotalidad: [
         { id: 1, name: 'Juan' },
         { id: 2, name: 'Maria' },
         { id: 3, name: 'Pedro' }
@@ -117,7 +117,7 @@ export default {
       const response = await axios.get('http://localhost:3000/usuarios/');
       console.log(response);
       console.log(response.data);
-      this.usuarios=response.data;
+      this.usuariosTotalidad=response.data;
     } catch (error) {
       console.error(error);
     }
@@ -129,17 +129,19 @@ export default {
     },
     createProject: async function () {
       // Enviar los datos del formulario al backend para crear un nuevo proyecto
-      console.log('Crear un nuevo proyecto:', this.nombre, this.descripcion, this.projectAssignee, this.projectDueDate);
+      //console.log('Crear un nuevo proyecto:', this.nombre, this.descripcion, this.projectAssignee, this.projectDueDate);
+
       console.log(this.usuarios);
-      
+
+      console.log(this);
+      //this.usuarios=this.projectAssignee;
       const response = await axios.post('http://localhost:3000/proyectos/', this);
 
       // Reinicializar el formulario
       this.nombre = '';
       this.descripcion = '';
-      this.projectAssignee = '';
+      this.usuarios = '';
       this.projectDueDate = '';
-      
     }
   }
 }
