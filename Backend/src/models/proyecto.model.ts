@@ -14,8 +14,11 @@ export class Proyecto {
     }
 
     static create(nuevoProyecto: Proyecto, result: any) {
+        console.log("nuevo", nuevoProyecto);
+        
         var usuarios = nuevoProyecto.usuarios;
         delete nuevoProyecto.usuarios;
+        console.log("usuarios");
 
         dbConn.query("INSERT INTO proyectos SET ?", nuevoProyecto, function (err: any, res: any) {
             if (err) {
@@ -26,6 +29,7 @@ export class Proyecto {
                 console.log(res.insertId);
 
                 if(usuarios) usuarios.forEach((item)=>{
+                    console.log("error ", item);
                     dbConn.query("INSERT INTO usuarios_proyectos SET ?", 
                         {id_proyecto: res.insertId, id_usuario: item},
                         function (err: any, resup: any){
