@@ -9,19 +9,26 @@
           <div class="card-body">
             <form @submit.prevent="createProject">
               <div class="form-group">
-                <label for="projectName">Nombre del proyecto:</label>
-                <input type="text" id="projectName" class="form-control" v-model="projectName">
-              </div>
-              <div class="form-group">
-                <label for="projectAssignee">Asignar a:</label>
-                <select id="projectAssignee" class="form-control" v-model="projectAssignee">
-                  <option value="">-- Seleccionar una persona --</option>
-                  <option v-for="person in people" :key="person.id" :value="person.id">{{ person.name }}</option>
+                <label for="projectClient">Cliente:</label>
+                <select id="projectClient" class="form-control" v-model="id_cliente" required>
+                  <option value="">-- Seleccionar un cliente --</option>
+                  <option v-for="cliente in clientes" :key="cliente.id" :value="cliente.id">{{ cliente.nombre }}</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="projectDescription">Descripción:</label>
-                <textarea id="projectDescription" class="form-control" v-model="projectDescription"></textarea>
+                <label for="projectName">Nombre del proyecto:</label>
+                <input type="text" id="projectName" class="form-control" v-model="nombre" required>
+              </div>
+              <div class="form-group">
+                <label for="projectAssignee">Asignar a:</label>
+                <select id="projectAssignee" class="form-control" v-model="usuarios" multiple>
+                  <option value="">-- Seleccionar una persona --</option>
+                  <option v-for="usuario in usuariosTotalidad" :key="usuario.id" :value="usuario.id">{{ usuario.nombre }} {{ usuario.apellido }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" class="form-control" v-model="descripcion"></textarea>
               </div>
                 <div class="form-group">
                   <label for="projectDueDate">Fecha de entrega:</label>
@@ -56,15 +63,23 @@
           </div>
         </div>
 </template>
+
+
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
-      projectName: '',
-      projectDescription: '',
-      projectAssignee: '',
+      nombre: '',
+      descripcion: '',
+      usuarios: '',
       projectDueDate: '',
-      people: [
+      clientes: [
+        { id: 1, nombre: 'Cliente1' },
+        { id: 2, nombre: 'Cliente2' },
+        { id: 3, nombre: 'Cliente3' }
+      ],
+      usuariosTotalidad: [
         { id: 1, name: 'Juan' },
         { id: 2, name: 'Maria' },
         { id: 3, name: 'Pedro' }
@@ -85,18 +100,52 @@ export default {
       selectedTab: 'fecha'
     }
   },
+
+  created: async function(){
+    console.log('Ver si llega');
+    try {
+      // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+      const response = await axios.get('http://localhost:3000/clientes/');
+      console.log(response);
+      console.log(response.data);
+      this.clientes=response.data;
+    } catch (error) {
+      console.error(error);
+    }
+    try {
+      // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+      const response = await axios.get('http://localhost:3000/usuarios/');
+      console.log(response);
+      console.log(response.data);
+      this.usuariosTotalidad=response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  
   methods: {
-    createProject() {
+    loadClientes(){
+      console.log('Ver si llega');
+    },
+    createProject: async function () {
       // Enviar los datos del formulario al backend para crear un nuevo proyecto
-      console.log('Crear un nuevo proyecto:', this.projectName, this.projectDescription, this.projectAssignee, this.projectDueDate);
+      //console.log('Crear un nuevo proyecto:', this.nombre, this.descripcion, this.projectAssignee, this.projectDueDate);
+
+      console.log(this.usuarios);
+
+      console.log(this);
+      //this.usuarios=this.projectAssignee;
+      const response = await axios.post('http://localhost:3000/proyectos/', this);
+
       // Reinicializar el formulario
-      this.projectName = '';
-      this.projectDescription = '';
-      this.projectAssignee = '';
+      this.nombre = '';
+      this.descripcion = '';
+      this.usuarios = '';
       this.projectDueDate = '';
     }
   }
 }
+
 </script>
 
 <style>

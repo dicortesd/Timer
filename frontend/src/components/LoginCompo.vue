@@ -1,9 +1,9 @@
 <template>
-    <form class="custom-form">
+    <form class="custom-form" @submit.prevent="onSubmit">
       <div class="form-group">
-        <label>User</label>
+        <label>Correo</label>
         <input
-          v-model="form.username"
+          v-model="form.correo"
           class="form-control"
           placeholder="test"
           required
@@ -12,16 +12,16 @@
       <div class="form-group">
         <label>Password</label>
         <input
-          v-model="form.password"
+          v-model="form.contrasena"
           class="form-control"
           type="password"
           placeholder="Password"
           required
         />
       </div>
-      <div class="text-danger my-2">error</div>
+      <div class="text-danger my-2"></div>
       <div class="d-flex justify-content-center my-2">
-        <button class="btn btn-success btn-block mr-2" type="submit">Logfffin</button>
+        <button class="btn btn-success btn-block mr-2" type="submit">Login</button>
         <button class="btn btn-primary btn-block ml-2" type="button" @click="onRegisterClick">Register</button>
       </div>
     </form>
@@ -30,22 +30,47 @@
   <script lang="ts">
   import { defineComponent, reactive } from 'vue'
   import { useRouter } from 'vue-router'
+  import { Usuario } from '../../../Backend/src/models/usuario.model';
+  import { verifyLogin } from '../../../Backend/src/controllers/usuario.controller';
+  import axios from 'axios';
   
   export default defineComponent({
     name: "LoginComponent",
     setup() {
       const form = reactive({
-        username: '',
-        password: '',
+        correo: '',
+        contrasena: '',
       })
   
       const router = useRouter()
   
-      const onSubmit = () => {
-  
-        form.username = ''
-        form.password = ''
+      const onSubmit = async () => {
+        const newLogin: Usuario={
+          correo : form.correo,
+          contrasena : form.contrasena,
+          nombre: '',
+          apellido: '',
+          rol: ''
+        }
+        console.log(newLogin);
+
+        try {
+          // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+          const response = await axios.post('http://localhost:3000/usuarios/verify/', newLogin);
+          if (response.data.error== false){
+            window.alert('Bienvenido '+ response.data.usuario.nombre);
+            // Hace falta guardar información de login para los siguientes llamados del API
+            router.push('/'+ response.data.usuario.rol);
+          }
+          else{
+            window.alert('Verifique sus credenciales. ');
+          }
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
       }
+
   
       const onRegisterClick = () => {
         router.push('/register') // redirige vers la page '/register'

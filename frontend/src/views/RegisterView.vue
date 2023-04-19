@@ -1,12 +1,13 @@
 <template>
     <div class="container">
-      <form>
+      <!--Se metió el form para activar el método submit cuando se espicha el botón de registrar-->
+      <form @submit.prevent="onSubmit">
         <table>
           <tr>
             <td><label>Nombre</label></td>
-            <td><input type="text" v-model="form.nombre"></td>
-            <td><label>Roi/cargo</label></td>
-            <td><input type="text" v-model="form.roi"></td>
+            <td><input type="text" v-model="form.nombre" required></td>
+            <td><label>Rol/cargo</label></td>
+            <td><input type="text" v-model="form.rol"></td>
           </tr>
           <tr>
             <td><label>Correo electronico</label></td>
@@ -15,10 +16,10 @@
             <td><input type="text" v-model="form.empresa"></td>
           </tr>
           <tr>
-            <td><label>Contrasena</label></td>
-            <td><input type="password" v-model="form.password"></td>
-            <td><label>Confirmar contrasena</label></td>
-            <td><input type="password" v-model="form.confirmPassword"></td>
+            <td><label>Contraseña</label></td>
+            <td><input type="password" v-model="form.contrasena"></td>
+            <td><label>Confirmar contraseña</label></td>
+            <td><input type="password" v-model="form.confirmContrasena"></td>
           </tr>
         </table>
         <button type="submit" class="btn btn-primary">Register</button>
@@ -29,43 +30,42 @@
 
   <script lang="ts">
   import { defineComponent, reactive } from 'vue'
-  import { create, findAll } from '../../../Backend/src/controllers/usuario.controller';
-
+  import { Usuario } from '../../../Backend/src/models/usuario.model';
+  import { create} from '../../../Backend/src/controllers/usuario.controller';
+  import axios from 'axios';
   
   export default defineComponent({
     name: 'RegisterView',
     setup() {
       const form = reactive({
         nombre: '',
-        roi: '',
+        rol: '',
         email: '',
         empresa: '',
-        password: '',
-        confirmPassword: '',
-      })
+        contrasena: '',
+        confirmContrasena: '',
+      });
   
-      const onSubmit = () => {
+      const onSubmit = async () => {
         const mots = form.nombre.split(" ");
-        const user = ({
+        const newUser: Usuario = {
           nombre: mots[0],
           apellido: mots.slice(1).join(" "),
           correo: form.email,
-          roi: form.roi
+          rol: form.rol,
+          contrasena: form.contrasena
+        };
 
-        })
-        /*
-        create(user)
-        .then(response => {
+
+        try {
+          // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+          const response = await axios.post('http://localhost:3000/usuarios/', newUser);
+          console.log("oui");
           console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error.response.data);
-        });
-
-        */
-
+        } catch (error) {
+          console.error(error);
+        }
       }
-  
       return { form, onSubmit }
     },
   })

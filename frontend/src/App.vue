@@ -26,6 +26,7 @@
   </div>
 </template>
 
+
 <style>
 .top-banner {
   display: flex;

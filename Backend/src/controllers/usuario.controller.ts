@@ -1,6 +1,23 @@
 import { Usuario } from "../models/usuario.model";
 import express, { Express, Request, Response } from 'express';
 
+export const verifyLogin = function(req:Request, res:Response) {
+    if(req.body.constructor === Object && Object.keys(req.body).length === 0){
+        res.status(400).send({ error:true, message: 'Por favor provea todos los campos requeridos.' });
+    }
+    else{
+        Usuario.verifyLogin(req.body, function(err: Error, resultado: any) {
+            if (err){
+                res.send(err);
+            }
+            else{
+                console.log(resultado);
+                res.json(resultado);
+            }
+        });
+    }
+};
+
 export const findAll = function(req: Request,res: Response){
     Usuario.findAll(function(err: Error,usuario:Usuario){
         console.log('controller');
