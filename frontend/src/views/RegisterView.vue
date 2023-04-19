@@ -60,6 +60,7 @@
         try {
           // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
           const response = await axios.post('http://localhost:3000/usuarios/', newUser);
+          console.log("oui");
           console.log(response.data);
         } catch (error) {
           console.error(error);
