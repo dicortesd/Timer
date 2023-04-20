@@ -96,9 +96,9 @@
     },
     methods: {
       formatDate(date: string) {
-        const options = { year: "numeric", month: "long", day: "numeric" };
-        return new Date(date).toLocaleDateString(undefined, options);
-      },
+  const options = { year: "2-digit", month: "long", day: "numeric" };
+  return new Date(date).toLocaleDateString(undefined);
+},
     },
   });
   </script>
