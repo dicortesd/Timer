@@ -3,10 +3,10 @@
       <h1>{{ username }}</h1>
       <div class="box-container">
         <div class="box">
-          <h2>Clients</h2>
+          <h2>Clientes</h2>
           <div class="square-container">
-            <div v-for="(client, index) in clients" :key="index" class="square" @click="selectClient(client)">
-              {{ client }}
+            <div v-for="(client, index) in clientes" :key="index" class="square" @click="selectClient(client.id)">
+              {{ client.nombre }}
             </div>
           </div>
         </div>
@@ -14,7 +14,7 @@
           <h2>Projets associés</h2>
           <div class="square-container">
             <div v-for="(project, index) in projects" :key="index" class="square" @click="showProjectName(project)">
-              {{ project }}
+              {{ project.nombre }}
             </div>
           </div>
         </div>
@@ -23,6 +23,7 @@
   </template>
   
   <script lang="ts">
+  import axios from 'axios';
   import { defineComponent } from "vue";
   
   export default defineComponent({
@@ -30,18 +31,32 @@
     data() {
       return {
         username: "John Doe",
-        clients: ["Client 1", "Client 2", "Client 3"],
+        clientes: [{id:"1",nombre:"Client 1"}, {id:"2", nombre:"Client 2"}],
         selectedClient: "",
-        projects: [] as string[],
+        projects: [] as any[],
       };
     },
+    created: async function(){
+    console.log('Ver si llega');
+    try {
+      // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+      const response = await axios.get('http://localhost:3000/clientes/');
+      console.log(response);
+      console.log(response.data);
+      this.clientes=response.data;
+    } catch (error) {
+      console.error(error);
+    }
+    
+  },
     methods: {
-      selectClient(client: string) {
+      selectClient(client: any) {
+        console.log(client);
         this.selectedClient = client;
-        this.projects = this.getProjects(client);
+        this.getProjects(client);
       },
-      getProjects(client: string): string[] {
-        switch (client) {
+      getProjects: async function (id_cliente: string) {
+       /* switch (client) {
           case "Client 1":
             return ["Project 1A", "Project 1B", "Project 1C"];
           case "Client 2":
@@ -50,6 +65,12 @@
             return ["Project 3A", "Project 3B", "Project 3C"];
           default:
             return [];
+        } */
+        try{
+          const response = await axios.get('http://localhost:3000/proyectos/?id_cliente='+id_cliente);
+          this.projects=response.data;
+        } catch (error) {
+          console.error(error);
         }
       },
       showProjectName(project: string) {
