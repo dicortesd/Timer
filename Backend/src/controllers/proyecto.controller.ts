@@ -2,7 +2,7 @@ import { Proyecto } from "../models/proyecto.model";
 import express, { Express, Request, Response } from 'express';
 
 export const findAll = function(req: Request,res: Response){
-    Proyecto.findAll(function(err: Error,proyecto: Proyecto){
+    Proyecto.findAll(req.query, function(err: Error,proyecto: Proyecto){
         console.log('controller');
         if (err){
             res.send(err);

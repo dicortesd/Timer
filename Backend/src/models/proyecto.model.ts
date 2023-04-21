@@ -64,11 +64,12 @@ export class Proyecto {
         });
     }
 
-
-    static findAll(result: any) {
+    static findAll(query:any, result: any) {
                    //"SELECT us.*, (SELECT GROUP_CONCAT(up.id_proyecto SEPARATOR ',') FROM usuarios_proyectos up WHERE up.id_usuario=us.id) as proyectos FROM usuarios us", function (err: any, res: any) {
-
-        dbConn.query("SELECT pr.*, (SELECT GROUP_CONCAT(up.id_usuario SEPARATOR ',') FROM usuarios_proyectos up WHERE up.id_proyecto=pr.id) as usuarios FROM proyectos pr", function (err: any, res: any) {
+        console.log(query);
+        let condicion = "true";
+        if(query.id_cliente!= undefined) condicion += " AND pr.id_cliente = '" + query.id_cliente + "'";
+        dbConn.query("SELECT pr.*, (SELECT GROUP_CONCAT(up.id_usuario SEPARATOR ',') FROM usuarios_proyectos up WHERE up.id_proyecto=pr.id) as usuarios FROM proyectos pr WHERE " + condicion, function (err: any, res: any) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);
