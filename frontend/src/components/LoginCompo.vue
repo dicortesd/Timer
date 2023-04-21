@@ -29,6 +29,7 @@
   
   <script lang="ts">
   import { defineComponent, reactive } from 'vue'
+  import Cookies from 'js-cookie'
   import { useRouter } from 'vue-router'
   import { Usuario } from '../../../Backend/src/models/usuario.model';
   import { verifyLogin } from '../../../Backend/src/controllers/usuario.controller';
@@ -60,7 +61,10 @@
           if (response.data.error== false){
             window.alert('Bienvenido '+ response.data.usuario.nombre);
             // Hace falta guardar información de login para los siguientes llamados del API
-            router.push('/'+ response.data.usuario.rol);
+            router.push('/');
+            Cookies.set('user', response.data.usuario)
+            window.location.reload()
+            
           }
           else{
             window.alert('Verifique sus credenciales. ');
