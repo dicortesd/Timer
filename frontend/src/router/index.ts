@@ -2,6 +2,8 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CreateProject from '@/components/CreateProject.vue'
 import SeeClient from '@/components/SeeClient.vue'
+import LoginCompoVue from '@/components/LoginCompo.vue'
+import Proyectos from '@/components/SeeProyecto.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -25,6 +27,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/SeeClient',
     name: 'SeeClient',
     component: SeeClient 
+  },
+  {
+    path: '/Login',
+    name: 'LoginComponent',
+    component: LoginCompoVue 
+  },
+  {
+    path: '/Proyectos/:id',
+    name: 'ProjectDetails',
+    component: Proyectos 
   }
 ]
 

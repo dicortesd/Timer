@@ -3,7 +3,8 @@
     <div class="top-banner">
       <div class="app-title">Empresa Test</div>
       <a href="#"><font-awesome-icon :icon="['fas', 'bell']"/></a>
-      <a href="#" @click="showPopup = !showPopup"><font-awesome-icon :icon="['fas', 'user']"/></a>
+      <a v-if="isAdmin" href="#" @click="showPopup = !showPopup"><font-awesome-icon :icon="['fas', 'user']"/></a>
+      <a v-else href="/Login"><font-awesome-icon :icon="['fas', 'user']"/></a>
     </div>
     <nav>
       <router-link to="/">Home</router-link> |
@@ -38,14 +39,28 @@
 
 import Cookies from 'js-cookie';
 
-
 export default {
 
-  
   data() {
     return {
       showPopup: false
     }
+  },
+  setup(){
+    const userCookie = Cookies.get('user');
+    const user = userCookie ? JSON.parse(userCookie) : null;
+
+    let isAdmin = false;
+
+    console.log("=======")
+    console.log(user);
+
+
+    if (user && user.rol === 'admin') {
+      isAdmin = true;
+    }
+    console.log(isAdmin);
+    return { isAdmin };
   },
   methods: {
     
@@ -57,6 +72,7 @@ export default {
       // Code pour se déconnecter ici
     }
   }
+  
 }
 </script>
 

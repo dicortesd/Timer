@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h1>{{ projectName }}</h1>
+      <h1>{{ projectName }} {{ id }}</h1>
       <button type="button" @click="showForm = true">Anadir Tarea</button>
       <div v-if="showForm">
         <form @submit.prevent="addTask">
@@ -45,6 +45,9 @@
   
   export default defineComponent({
     name: "ProjectDetails",
+    setup(){
+      //console.log(this.$route.params.id);
+    },
     data() {
       return {
         projectName: "Projet 1A",
@@ -56,10 +59,12 @@
           category: "",
           details: "",
         },
+        id: this.$route.params.id
       };
     },
     methods: {
       addTask() {
+        console.log(this.id);
         this.tasks.push({ ...this.newTask });
         this.newTask.name = "";
         this.newTask.category = "";

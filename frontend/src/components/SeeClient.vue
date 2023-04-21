@@ -25,9 +25,13 @@
   <script lang="ts">
   import axios from 'axios';
   import { defineComponent } from "vue";
+  import { useRouter } from 'vue-router'
   
   export default defineComponent({
     name: "ProjectList",
+    setup(){
+      const router = useRouter();
+    },
     data() {
       return {
         username: "John Doe",
@@ -73,8 +77,9 @@
           console.error(error);
         }
       },
-      showProjectName(project: string) {
-        console.log(project);
+      showProjectName(project: any) {
+        console.log(project.id);
+        this.$router.push('/Proyectos/' + project.id);
       },
     },
   });

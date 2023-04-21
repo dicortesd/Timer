@@ -53,31 +53,23 @@
     name: "HomePage",
     setup(){
       const userCookie = Cookies.get('user');
-const user = userCookie ? JSON.parse(userCookie) : null;
+      const user = userCookie ? JSON.parse(userCookie) : null;
 
-let isAdmin = false;
+      let isAdmin = false;
 
-if (user && user.rol === 'admin') {
-  isAdmin = true;
-}
-
-
-
-const router = useRouter()
-
-const createProject = () => {
-  router.push('/CreateProject') // redirige vers la page '/register'
-}
-const viewClients = () => {
-  router.push('/SeeClient') // redirige vers la page '/ViewClients'
-}
-
-// Récupère la valeur de l'utilisateur connecté depuis le cookie et détermine s'il est admin
-
-
-
-return { createProject, viewClients, isAdmin}
-},
+      if (user && user.rol === 'admin') {
+        isAdmin = true;
+      }
+      const router = useRouter()
+      const createProject = () => {
+        router.push('/CreateProject') // redirige vers la page '/register'
+      }
+      const viewClients = () => {
+        router.push('/SeeClient') // redirige vers la page '/ViewClients'
+      }
+      // Récupère la valeur de l'utilisateur connecté depuis le cookie et détermine s'il est admin
+      return { createProject, viewClients, isAdmin}
+    },
     data() {
       return {
         username: "John Doe",
@@ -119,9 +111,9 @@ return { createProject, viewClients, isAdmin}
     },
     methods: {
       formatDate(date: string) {
-  const options = { year: "2-digit", month: "long", day: "numeric" };
-  return new Date(date).toLocaleDateString(undefined);
-},
+        const options = { year: "2-digit", month: "long", day: "numeric" };
+        return new Date(date).toLocaleDateString(undefined);
+      },
     },
   });
   </script>
