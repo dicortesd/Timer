@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CreateProject from '@/components/CreateProject.vue'
+import SeeClient from '@/components/SeeClient.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -19,6 +20,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/CreateProject',
     name: 'CreateProject',
     component: CreateProject
+  },
+  {
+    path: '/SeeClient',
+    name: 'SeeClient',
+    component: SeeClient 
   }
 ]
 

@@ -1,60 +1,83 @@
 <template>
-    <div>
-      <h1>{{ username }}'s Dashboard</h1>
-      <div class="row">
-        <div class="col-md-6">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="m-0 proyectos-title">Proyectos</h2>
-    <button class="btn btn-primary" @click="createProject">Crear proyecto</button>
-  </div>
-          <div v-if="projects.length > 0" class="card">
-            <div class="card-body">
-              <div v-for="(project, index) in projects" :key="index">
-                <h5 class="card-title">{{ project.name }}</h5>
-                <p class="card-text">{{ project.description }}</p>
-                <a :href="`/projects/${project.id}`" class="btn btn-primary">Ver Proyecto</a>
-              </div>
+  <div>
+    <h1>{{ username }}'s Dashboard</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="m-0 proyectos-title">Proyectos</h2>
+          <button class="btn btn-primary" @click="createProject">Crear proyecto</button>
+          <button v-if="isAdmin" class="btn btn-primary" @click="viewClients">Ver Clientes</button>
+        </div>
+        <div v-if="projects.length > 0" class="card">
+          <div class="card-body">
+            <div v-for="(project, index) in projects" :key="index">
+              <h5 class="card-title">{{ project.name }}</h5>
+              <p class="card-text">{{ project.description }}</p>
+              <a :href="`/projects/${project.id}`" class="btn btn-primary">Ver Proyecto</a>
             </div>
-          </div>
-          <div v-else>
-            <p>No se encontraron proyectos.</p>
           </div>
         </div>
-        <div class="col-md-6">
-          <h2>Actividad Reciente</h2>
-          <div v-if="activity.length > 0" class="card">
-            <div class="card-body">
-              <div v-for="(item, index) in activity" :key="index">
-                <h5 class="card-title">{{ item.title }}</h5>
-                <p class="card-text">{{ item.description }}</p>
-                <p class="card-text"><small class="text-muted">{{ formatDate(item.date) }}</small></p>
-              </div>
+        <div v-else>
+          <p>No se encontraron proyectos.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h2>Actividad Reciente</h2>
+        <div v-if="activity.length > 0" class="card">
+          <div class="card-body">
+            <div v-for="(item, index) in activity" :key="index">
+              <h5 class="card-title">{{ item.title }}</h5>
+              <p class="card-text">{{ item.description }}</p>
+              <p class="card-text"><small class="text-muted">{{ formatDate(item.date) }}</small></p>
             </div>
           </div>
-          <div v-else>
-            <p>No se encontró actividad reciente.</p>
-          </div>
+        </div>
+        <div v-else>
+          <p>No se encontró actividad reciente.</p>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
+
   
   
   <script lang="ts">
   import { defineComponent } from "vue";
   import { useRouter } from 'vue-router';
+  import Cookies from 'js-cookie';
+
+
   
   export default defineComponent({
     name: "HomePage",
     setup(){
+      const userCookie = Cookies.get('user');
+const user = userCookie ? JSON.parse(userCookie) : null;
 
-        const router = useRouter()
-        const createProject = () => {
-        router.push('/CreateProject') // redirige vers la page '/register'
-      }
+let isAdmin = false;
 
-      return{createProject}
-    },
+if (user && user.rol === 'admin') {
+  isAdmin = true;
+}
+
+
+
+const router = useRouter()
+
+const createProject = () => {
+  router.push('/CreateProject') // redirige vers la page '/register'
+}
+const viewClients = () => {
+  router.push('/SeeClient') // redirige vers la page '/ViewClients'
+}
+
+// Récupère la valeur de l'utilisateur connecté depuis le cookie et détermine s'il est admin
+
+
+
+return { createProject, viewClients, isAdmin}
+},
     data() {
       return {
         username: "John Doe",

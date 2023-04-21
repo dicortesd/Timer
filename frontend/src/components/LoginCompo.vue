@@ -5,7 +5,7 @@
         <input
           v-model="form.correo"
           class="form-control"
-          placeholder="test"
+          placeholder="email@example.fr"
           required
         />
       </div>
@@ -53,7 +53,7 @@
           apellido: '',
           rol: ''
         }
-        console.log(newLogin);
+        //console.log(newLogin);
 
         try {
           // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
@@ -62,12 +62,13 @@
             window.alert('Bienvenido '+ response.data.usuario.nombre);
             // Hace falta guardar información de login para los siguientes llamados del API
             router.push('/');
-            Cookies.set('user', response.data.usuario)
+            console.log(JSON.stringify(response.data.usuario))
+            Cookies.set('user', JSON.stringify(response.data.usuario))
             window.location.reload()
             
           }
           else{
-            window.alert('Verifique sus credenciales. ');
+            window.alert('Verifique sus credenciales.');
           }
           console.log(response.data);
         } catch (error) {
