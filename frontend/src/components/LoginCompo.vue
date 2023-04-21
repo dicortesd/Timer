@@ -5,7 +5,7 @@
         <input
           v-model="form.correo"
           class="form-control"
-          placeholder="test"
+          placeholder="email@example.fr"
           required
         />
       </div>
@@ -29,6 +29,7 @@
   
   <script lang="ts">
   import { defineComponent, reactive } from 'vue'
+  import Cookies from 'js-cookie'
   import { useRouter } from 'vue-router'
   import { Usuario } from '../../../Backend/src/models/usuario.model';
   import { verifyLogin } from '../../../Backend/src/controllers/usuario.controller';
@@ -52,7 +53,7 @@
           apellido: '',
           rol: ''
         }
-        console.log(newLogin);
+        //console.log(newLogin);
 
         try {
           // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
@@ -60,10 +61,14 @@
           if (response.data.error== false){
             window.alert('Bienvenido '+ response.data.usuario.nombre);
             // Hace falta guardar información de login para los siguientes llamados del API
-            router.push('/'+ response.data.usuario.rol);
+            router.push('/');
+            console.log(JSON.stringify(response.data.usuario))
+            Cookies.set('user', JSON.stringify(response.data.usuario))
+            window.location.reload()
+            
           }
           else{
-            window.alert('Verifique sus credenciales. ');
+            window.alert('Verifique sus credenciales.');
           }
           console.log(response.data);
         } catch (error) {
