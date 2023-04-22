@@ -1,7 +1,7 @@
 <template>
     <div>
       <h1>{{ projectName }} {{ id }}</h1>
-      <button type="button" @click="showForm = true">Anadir Tarea</button>
+      <button type="button" @click="showForm = true">Añadir Tarea</button>
       <div v-if="showForm">
         <form @submit.prevent="addTask">
           <label for="taskName">Nombre de la tarea :</label>
@@ -10,7 +10,7 @@
           <input type="text" id="taskCategory" v-model="newTask.category" required />
           <label for="taskDetails">Observaciones :</label>
           <textarea id="taskDetails" v-model="newTask.details" required></textarea>
-          <button type="submit">Anadir</button>
+          <button type="submit">Añadir</button>
         </form>
       </div>
       <div class="box-container">
@@ -35,6 +35,7 @@
   </template>
   
   <script lang="ts">
+  import axios from 'axios';
   import { defineComponent } from "vue";
   
   interface Task {
@@ -62,6 +63,20 @@
         id: this.$route.params.id
       };
     },
+
+    created: async function(){
+    console.log('Ver si llega');
+    try {
+      // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+      const response = await axios.get('http://localhost:3000/usuarios/');
+      console.log(response);
+      console.log(response.data);
+      this.participants=response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
     methods: {
       addTask() {
         console.log(this.id);

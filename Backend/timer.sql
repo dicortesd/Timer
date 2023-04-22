@@ -105,11 +105,14 @@ CREATE TABLE `tareas` (
   `id_proyecto` int(11) NOT NULL,
   `nombre` varchar(128) NOT NULL,
   `id_categoria` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `tareas_FK` (`id_proyecto`),
   KEY `tareas_FK_1` (`id_categoria`),
+  KEY `tareas_FK_2` (`id_usuario`),
   CONSTRAINT `tareas_FK` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`),
-  CONSTRAINT `tareas_FK_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id`)
+  CONSTRAINT `tareas_FK_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id`),
+  CONSTRAINT `tareas_FK_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
