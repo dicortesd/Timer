@@ -94,8 +94,13 @@ export class Usuario {
     }
 
 
-    static findAll(result: any) {
-        dbConn.query("SELECT us.*, (SELECT GROUP_CONCAT(up.id_proyecto SEPARATOR ',') FROM usuarios_proyectos up WHERE up.id_usuario=us.id) as proyectos FROM usuarios us", function (err: any, res: any) {
+    static findAll(req:any, result: any) {
+        console.log(req.params);
+        let condicion = "true";
+        if(req.params.id_proyecto!= undefined) condicion += " AND us.id IN (SELECT id_usuario FROM usuarios_proyectos WHERE id_proyecto='" + req.params.id_proyecto + "')";
+        console.log(condicion);
+
+        dbConn.query("SELECT us.*, (SELECT GROUP_CONCAT(up.id_proyecto SEPARATOR ',') FROM usuarios_proyectos up WHERE up.id_usuario=us.id) as proyectos FROM usuarios us WHERE " + condicion, function (err: any, res: any) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);
