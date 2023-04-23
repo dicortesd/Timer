@@ -18,7 +18,7 @@
           <h2>Usuarios</h2>
           <div class="square-container">
             <div v-for="(participant, index) in participants" :key="index" class="square">
-              {{ participant }}
+              {{ participant.nombre }} {{ participant.apellido }}
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
     data() {
       return {
         projectName: "Projet 1A",
-        participants: ["Participant 1", "Participant 2", "Participant 3"],
+        participants: [{id: 1, nombre: "Participant 1", apellido: "Apellido 1"}, {id: 2, nombre: "Participant 2", apellido: "Apellido 2"}, {id: 3, nombre: "Participant 3", apellido: "Apellido 3"}],
         tasks: [] as Task[],
         showForm: false,
         newTask: {
@@ -68,7 +68,7 @@
     console.log('Ver si llega');
     try {
       // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
-      const response = await axios.get('http://localhost:3000/usuarios/');
+      const response = await axios.get('http://localhost:3000/proyectos/'+ this.id +'/usuarios');
       console.log(response);
       console.log(response.data);
       this.participants=response.data;
