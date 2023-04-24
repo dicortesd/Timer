@@ -3,10 +3,12 @@
     <h1>{{ username }}'s Dashboard</h1>
     <div class="row">
       <div class="col-md-6">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h2 class="m-0 proyectos-title">Proyectos</h2>
-          <button class="btn btn-primary" @click="createProject">Crear proyecto</button>
-          <button v-if="isAdmin" class="btn btn-primary" @click="viewClients">Ver Clientes</button>
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="m-0 proyectos-title">          </h2>
+          <div>
+            <button class="btn btn-primary me-2" @click="createProject">Crear proyecto</button>
+            <button v-if="isAdmin" class="btn btn-primary" @click="viewClients">Ver Clientes</button>
+          </div>
         </div>
         <div v-if="projects.length > 0" class="card">
           <div class="card-body">
@@ -39,6 +41,8 @@
     </div>
   </div>
 </template>
+
+
 
   
   
