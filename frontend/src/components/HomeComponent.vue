@@ -46,6 +46,7 @@
   import { defineComponent } from "vue";
   import { useRouter } from 'vue-router';
   import Cookies from 'js-cookie';
+import { userInfo } from "os";
 
 
   
@@ -56,6 +57,11 @@
       const user = userCookie ? JSON.parse(userCookie) : null;
 
       let isAdmin = false;
+      let username = "John DOe";
+
+      if (user){
+        username= user.nombre;
+      } 
 
       if (user && user.rol === 'admin') {
         isAdmin = true;
@@ -68,11 +74,10 @@
         router.push('/SeeClient') // redirige vers la page '/ViewClients'
       }
       // Récupère la valeur de l'utilisateur connecté depuis le cookie et détermine s'il est admin
-      return { createProject, viewClients, isAdmin}
+      return { createProject, viewClients, isAdmin, username}
     },
     data() {
       return {
-        username: "John Doe",
         projects: [
           {
             id: 1,

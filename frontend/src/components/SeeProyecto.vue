@@ -5,11 +5,13 @@
       <div v-if="showForm">
         <form @submit.prevent="addTask">
           <label for="taskName">Nombre de la tarea :</label>
-          <input type="text" id="taskName" v-model="newTask.name" required />
-          <label for="taskCategory">Categoria :</label>
-          <input type="text" id="taskCategory" v-model="newTask.category" required />
+          <input type="text" id="taskName" v-model="newTask.nombre" required />
+          <select id="categoria" class="form-control" v-model="newTask.id_categoria" required>
+                  <option value="">-- Seleccionar una categoria --</option>
+                  <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{ categoria.nombre }}</option>
+          </select>
           <label for="taskDetails">Observaciones :</label>
-          <textarea id="taskDetails" v-model="newTask.details" required></textarea>
+          <textarea id="taskDetails" v-model="newTask.observaciones" required></textarea>
           <button type="submit">Añadir</button>
         </form>
       </div>
@@ -25,9 +27,9 @@
         <div class="box">
           <h2>Tareas</h2>
           <div v-for="(task, index) in tasks" :key="index" class="task">
-            <div class="task-name">{{ task.name }}</div>
-            <div class="task-category">{{ task.category }}</div>
-            <div class="task-details">{{ task.details }}</div>
+            <div class="task-name">{{ task.nombre }}</div>
+            <div class="task-category">{{ task.id_categoria }}</div>
+            <div class="task-details">{{ task.observaciones }}</div>
           </div>
         </div>
       </div>
@@ -37,11 +39,14 @@
   <script lang="ts">
   import axios from 'axios';
   import { defineComponent } from "vue";
+import { threadId } from 'worker_threads';
   
   interface Task {
-    name: string;
-    category: string;
-    details: string;
+    id: string;
+    nombre: string;
+    id_categoria: string;
+    observaciones: string;
+    id_proyecto: string;
   }
   
   export default defineComponent({
@@ -55,56 +60,92 @@
         participants: [{id: 1, nombre: "Participant 1", apellido: "Apellido 1"}, {id: 2, nombre: "Participant 2", apellido: "Apellido 2"}, {id: 3, nombre: "Participant 3", apellido: "Apellido 3"}],
         tasks: [] as Task[],
         showForm: false,
+        categorias: [
+        { id: "1", nombre: 'Categoria1' },
+        { id: "2", nombre: 'Categoria2' },
+        { id: "3", nombre: 'Categoria3' }
+      ],
         newTask: {
-          name: "",
-          category: "",
-          details: "",
+          id: "",
+          nombre: "",
+          id_categoria: "",
+          observaciones: "",
+          id_proyecto: ""
         },
         id: this.$route.params.id
       };
     },
 
     created: async function(){
-    console.log('Ver si llega');
-    try {
-      // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
-      const response = await axios.get('http://localhost:3000/proyectos/'+ this.id +'/usuarios');
-      console.log(response);
-      console.log(response.data);
-      this.participants=response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  },
+      try {
+        // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+        const response = await axios.get('http://localhost:3000/proyectos/'+ this.id);
+        console.log(response);
+        console.log(response.data);
+        this.projectName=response.data[0].nombre;
+      } catch (error) {
+        console.error(error);
+      }
+      this.getTasks();
+
+      console.log('Ver si llega');
+      try {
+        // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+        const response = await axios.get('http://localhost:3000/proyectos/'+ this.id +'/usuarios');
+        console.log(response);
+        console.log(response.data);
+        this.participants=response.data;
+      } catch (error) {
+        console.error(error);
+      }
+      try {
+        // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+        const response = await axios.get('http://localhost:3000/categorias/');
+        console.log(response);
+        console.log(response.data);
+        this.categorias=response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
     methods: {
-      addTask() {
-        console.log(this.id);
-        this.tasks.push({ ...this.newTask });
-        this.newTask.name = "";
-        this.newTask.category = "";
-        this.newTask.details = "";
+      addTask:async function () {
+        console.log(this.id as string);
+        //this.tasks.push({ ...this.newTask });
+        this.newTask.id_proyecto= this.id as string;
+        const response = await axios.post('http://localhost:3000/tareas/', this.newTask);
+        this.getTasks();
+        this.newTask.nombre = "";
+        this.newTask.id_categoria = "";
+        this.newTask.observaciones = "";
         this.showForm = false;
       },
       deleteTask(index: number) {
         this.tasks.splice(index, 1);
       },
 
-    getTasks(projectName: string): Task[] {
-        switch (projectName) {
+    getTasks: async function() {
+        /*switch (projectName) {
           case "Projet 1A":
             return [
-              { name: "Tâche 1", details: "Détails de la tâche 1",category:"" },
-              { name: "Tâche 2", details: "Détails de la tâche 2",category:"" },
-              { name: "Tâche 3", details: "Détails de la tâche 3",category:"" },
+              { id: "1", nombre: "Tâche 1", observaciones: "Détails de la tâche 1",id_categoria:"",id_proyecto: "" },
+              { id: "2", nombre: "Tâche 2", observaciones: "Détails de la tâche 2",id_categoria:"",id_proyecto: "" },
+              { id: "3", nombre: "Tâche 3", observaciones: "Détails de la tâche 3",id_categoria:"" ,id_proyecto: ""},
             ];
           case "Projet 1B":
             return [
-              { name: "Tâche 4", details: "Détails de la tâche 4",category:"" },
-              { name: "Tâche 5", details: "Détails de la tâche 5",category:"" },
+              { id: "4", nombre: "Tâche 4", observaciones: "Détails de la tâche 4",id_categoria:"",id_proyecto: "" },
+              { id: "5", nombre: "Tâche 5", observaciones: "Détails de la tâche 5",id_categoria:"",id_proyecto: "" },
             ];
           default:
             return [];
+        } */
+        try{
+          const response = await axios.get('http://localhost:3000/tareas/?id_proyecto='+this.id);
+          this.tasks=response.data;
+        } catch (error) {
+          console.error(error);
         }
       },
     },
