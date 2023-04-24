@@ -61,7 +61,7 @@ import { userInfo } from "os";
       const user = userCookie ? JSON.parse(userCookie) : null;
 
       let isAdmin = false;
-      let username = "John DOe";
+      let username = "Usuario";
 
       if (user){
         username= user.nombre;

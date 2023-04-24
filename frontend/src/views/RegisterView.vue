@@ -17,8 +17,7 @@
         <tr>
           <td><label>Correo electronico</label></td>
           <td><input type="email" v-model="form.email"></td>
-          <td><label>Empresa</label></td>
-          <td><input type="text" v-model="form.empresa"></td>
+
         </tr>
         <tr>
           <td><label>Contraseña</label></td>
@@ -45,7 +44,7 @@ export default defineComponent({
       nombre: '',
       rol: '',
       email: '',
-      empresa: '',
+      //empresa: '',
       contrasena: '',
       confirmContrasena: '',
     });
