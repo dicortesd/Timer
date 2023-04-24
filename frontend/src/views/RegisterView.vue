@@ -9,8 +9,8 @@
           <td>
             <select v-model="form.rol" required>
               <option value="">-- Seleccionar un rol --</option>
-              <option value="manageur">Manageur</option>
-              <option value="otro">Otro</option>
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
             </select>
           </td>
         </tr>
@@ -64,9 +64,26 @@ export default defineComponent({
         const response = await axios.post('http://localhost:3000/usuarios/', newUser);
         console.log("oui");
         console.log(response.data);
+        if (response.data.error== false){
+            window.alert('Usuario creado.');
+            console.log("ouiiiii");
+            //router.push('/');
+            //console.log(JSON.stringify(response.data.usuario))
+            window.location.href="/";
+            
+          }
+          else{
+            window.alert('Verifique datos.');
+          }
       } catch (error) {
         console.error(error);
       }
+      //Reiniciar formularios
+      form.nombre='';
+      form.email='';
+      form.email='';
+      form.contrasena='';
+      form.confirmContrasena='';
     }
     return { form, onSubmit }
   },

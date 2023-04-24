@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="top-banner">
-      <div class="app-title">Empresa Test</div>
+      <div class="app-title">Timer</div>
       <a href="#"><font-awesome-icon :icon="['fas', 'bell']"/></a>
       <a v-if="isAdmin" href="#" @click="showPopup = !showPopup"><font-awesome-icon :icon="['fas', 'user']"/></a>
       <a v-else href="/Login"><font-awesome-icon :icon="['fas', 'user']"/></a>
