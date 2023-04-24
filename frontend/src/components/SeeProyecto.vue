@@ -2,17 +2,19 @@
     <div>
       <h1>{{ projectName }} {{ id }}</h1>
       <button type="button" @click="showForm = true">Añadir Tarea</button>
-      <div v-if="showForm">
+      <div v-if="showForm" class="box-form">
         <form @submit.prevent="addTask">
           <label for="taskName">Nombre de la tarea :</label>
           <input type="text" id="taskName" v-model="newTask.nombre" required />
-          <select id="categoria" class="form-control" v-model="newTask.id_categoria" required>
+          <select id="categoria" class="form-control select-short" v-model="newTask.id_categoria" required>
                   <option value="">-- Seleccionar una categoria --</option>
                   <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{ categoria.nombre }}</option>
           </select>
           <label for="taskDetails">Observaciones :</label>
-          <textarea id="taskDetails" v-model="newTask.observaciones" required></textarea>
-          <button type="submit">Añadir</button>
+          <textarea id="taskDetails" v-model="newTask.observaciones" required style="vertical-align: top;"></textarea>
+          <div class="button-container" style="text-align: center;">
+            <button type="submit" @click="showForm = !showForm">Añadir</button>
+          </div>
         </form>
       </div>
       <div class="box-container">
@@ -217,6 +219,30 @@ import { threadId } from 'worker_threads';
     font-style: italic;
     color: #777;
   }
+
+  .box-form {
+  margin : auto;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+  height: 250px;
+  width: 400px;
+  }
+
+  .select-short {
+  margin : auto;
+  width: 150px;
+  }
+
+.box-form label,
+.box-form input,
+.box-form select,
+.box-form textarea {
+  margin-bottom: 10px;
+}
+
+
 
 </style>
   
