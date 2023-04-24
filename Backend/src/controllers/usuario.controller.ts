@@ -19,7 +19,7 @@ export const verifyLogin = function(req:Request, res:Response) {
 };
 
 export const findAll = function(req: Request,res: Response){
-    Usuario.findAll(function(err: Error,usuario:Usuario){
+    Usuario.findAll(req, function(err: Error,usuario:Usuario){
         console.log('controller');
         if (err){
             res.send(err);

@@ -4,11 +4,13 @@ export class Tarea {
     id_proyecto: string;
     nombre: string;
     id_categoria: string;
+    observaciones: string;
 
     constructor(tarea: Tarea) {
         this.nombre = tarea.nombre;
         this.id_proyecto = tarea.id_proyecto;
         this.id_categoria = tarea.id_categoria;
+        this.observaciones = tarea.observaciones;
     }
 
     static create(nuevaTarea: Tarea, result: any) {
@@ -36,8 +38,11 @@ export class Tarea {
     }
 
 
-    static findAll(result: any) {
-        dbConn.query("SELECT * from tareas", function (err: any, res: any) {
+    static findAll(req:any, result: any) {
+        console.log(req.query);
+        let condicion = "true";
+        if(req.query.id_proyecto!= undefined) condicion += " AND id_proyecto = '" + req.query.id_proyecto + "'";
+        dbConn.query("SELECT * from tareas WHERE " + condicion, function (err: any, res: any) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);

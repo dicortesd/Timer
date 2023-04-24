@@ -2,7 +2,7 @@ import { Tarea } from "../models/tarea.model";
 import express, { Express, Request, Response } from 'express';
 
 export const findAll = function(req: Request,res: Response){
-    Tarea.findAll(function(err: Error,tarea: Tarea){
+    Tarea.findAll(req, function(err: Error,tarea: Tarea){
         console.log('controller');
         if (err){
             res.send(err);

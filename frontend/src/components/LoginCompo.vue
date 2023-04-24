@@ -61,10 +61,10 @@
           if (response.data.error== false){
             window.alert('Bienvenido '+ response.data.usuario.nombre);
             // Hace falta guardar información de login para los siguientes llamados del API
-            router.push('/');
+            //router.push('/');
             console.log(JSON.stringify(response.data.usuario))
             Cookies.set('user', JSON.stringify(response.data.usuario))
-            window.location.reload()
+            window.location.href="/";
             
           }
           else{

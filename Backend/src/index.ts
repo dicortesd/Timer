@@ -38,7 +38,7 @@ app.use('/usuarios', usuarioRoutes);
 app.use('/clientes', clienteRoutes);
 app.use('/proyectos', proyectoRoutes);
 app.use('/tareas', tareaRoutes);
-app.use('/categoriass', categoriaRoutes);
+app.use('/categorias', categoriaRoutes);
 app.use('/tiempos', tiempoRoutes);
 
 
