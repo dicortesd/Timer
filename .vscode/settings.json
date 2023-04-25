@@ -1,5 +1,8 @@
 {
     "explorer.autoRevealExclude": {
         "/node_modules": true
-    }
+    },
+    "cSpell.words": [
+        "Proyecto"
+    ]
 }
