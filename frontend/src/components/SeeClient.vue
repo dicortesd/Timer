@@ -34,7 +34,7 @@
     },
     data() {
       return {
-        username: "John Doe",
+        username: "",
         clientes: [{id:"1",nombre:"Client 1"}, {id:"2", nombre:"Client 2"}],
         selectedClient: "",
         projects: [] as any[],
