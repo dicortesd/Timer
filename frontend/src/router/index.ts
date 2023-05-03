@@ -4,6 +4,7 @@ import CreateProject from '@/components/CreateProject.vue'
 import SeeClient from '@/components/SeeClient.vue'
 import LoginCompoVue from '@/components/LoginCompo.vue'
 import Proyectos from '@/components/SeeProyecto.vue'
+import ResumeProyectoVue from '@/components/ResumeProyecto.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -37,6 +38,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/Proyectos/:id',
     name: 'ProjectDetails',
     component: Proyectos 
+  },
+  {
+    path: '/resume',
+    name: 'resume',
+    component: ResumeProyectoVue 
   }
 ]
 

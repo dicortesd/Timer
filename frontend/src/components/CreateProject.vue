@@ -54,10 +54,13 @@
                 </select>
                 </div>
               </div>
-                <div class="form-group">
-                  <label for="projectNotes">Notas:</label>
-                  <textarea id="projectNotes" class="form-control" v-model="projectNotes"></textarea>
-                </div>
+              <div class="form-group">
+                <label for="projectStatis">Estado:</label>
+                <select id="projectStatus" class="form-control" v-model="estado" required>
+                  <option value="">-- Seleccionar un estado--</option>
+                  <option v-for="estado in estados" :key="estado.id" :value="estado.id">{{ estado.nombre }}</option>
+                </select>
+              </div>
               </div>
             </div>
           </div>
@@ -88,6 +91,11 @@ export default {
         { id: 1, name: 'Efficienca'},
         { id: 2, name: 'Rapidez'},
         { id: 3, name: 'Cualidad'}
+      ],
+      estados: [
+        { id: 1, nombre: 'Futuro' },
+        { id: 2, nombre: 'En Progreso' },
+        { id: 3, nombre: 'Terminado' }
       ],
       dueDates: [
         '1 semana',
@@ -142,6 +150,9 @@ export default {
       this.descripcion = '';
       this.usuarios = '';
       this.projectDueDate = '';
+      this.cliente='';
+      this.estado='';
+      this.objetivo='';
     }
   }
 }

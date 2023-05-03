@@ -47,7 +47,7 @@
     created: async function(){
       try {
         // Connexion au backend pour récupérer les données des tâches du projet
-        const response = await axios.get('http://localhost:3000/tasks/?projectID='+this.$route.params.id);
+        const response = await axios.get('http://localhost:3000/tareas/?projectID='+this.$route.params.id);
         const tasks = response.data;
         
         // Répartir les tâches dans les 3 états
