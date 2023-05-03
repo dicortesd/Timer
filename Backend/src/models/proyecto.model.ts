@@ -4,13 +4,15 @@ export class Proyecto {
     id_cliente: string;
     nombre: string;
     descripcion: string;
-    usuarios?: []; 
+    usuarios?: [];
+    estado: string; 
 
     constructor(proyecto: Proyecto) {
         this.nombre = proyecto.nombre;
         this.id_cliente = proyecto.id_cliente;
         this.descripcion = proyecto.descripcion;
         this.usuarios = proyecto.usuarios;
+        this.estado = proyecto.estado;
     }
 
     static create(nuevoProyecto: Proyecto, result: any) {
@@ -87,7 +89,7 @@ export class Proyecto {
     }
 
     static update(id: any, proyecto: Proyecto, result: any) {
-        dbConn.query("UPDATE proyectos SET nombre=?,id_cliente=?,descripcion=? WHERE id=?", [proyecto.nombre, proyecto.id_cliente, proyecto.descripcion, id], function (err: any, res: any) {
+        dbConn.query("UPDATE proyectos SET nombre=?,id_cliente=?,descripcion=?,estado=? WHERE id=?", [proyecto.nombre, proyecto.id_cliente, proyecto.descripcion, proyecto.estado, id], function (err: any, res: any) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);
