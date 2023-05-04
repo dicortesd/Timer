@@ -61,9 +61,9 @@ export default defineComponent({
       tasks: [] as Task[],
       showForm: false,
       categorias: [
-      { id: "1", nombre: 'Categoria1' },
-      { id: "2", nombre: 'Categoria2' },
-      { id: "3", nombre: 'Categoria3' }
+      { id: "1", nombre: 'Hacer' },
+      { id: "2", nombre: 'En curso' },
+      { id: "3", nombre: 'Terminado' }
     ],
       newTask: {
         id: "",
