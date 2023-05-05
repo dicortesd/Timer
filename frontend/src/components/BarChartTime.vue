@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Bar v-if="loaded" :data="chartData" />
+    <Bar v-if="loaded" :data="chartData" :options="chartOptions" @click="onBarClick" />
   </div>
 </template>
 
@@ -11,10 +11,22 @@ import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, Li
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 export default {
-  name: 'BarChartCost',
+  name: 'BarChartTime',
   components: { Bar },
   data: () => ({
     loaded: false,
+    chartOptions: {
+      interaction: {
+    mode: 'index',
+    intersect: false,
+  },
+      onClick: (event, elements) => {
+        if (elements.length > 0) {
+          const label = elements[0]._model.label
+          console.log(`Bar clicked: ${label}`)
+        }
+      }
+    },
     //example para ti
     chartData: {
         labels: [ 'Project1', 'P2', 'P3'],
@@ -27,6 +39,7 @@ export default {
         ]
       }
   }),
+  
   async mounted () {
     this.loaded = false
 
@@ -40,4 +53,5 @@ export default {
     }
   }
 }
+
 </script>
