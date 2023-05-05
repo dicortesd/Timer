@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Bar v-if="loaded" :data="chartData" :options="chartOptions" @click="onBarClick" />
+    <Bar v-if="loaded" :data="chartData" :options="chartOptions" />
   </div>
 </template>
 
@@ -15,20 +15,31 @@ export default {
   components: { Bar },
   data: () => ({
     loaded: false,
+    chartData: null,
     chartOptions: {
-      interaction: {
-    mode: 'index',
-    intersect: false,
-  },
       onClick: (event, elements) => {
-        if (elements.length > 0) {
-          const label = elements[0]._model.label
-          console.log(`Bar clicked: ${label}`)
-        }
+        if (elements.length != 0) {
+            var position = elements[0].index;
+            
+            console.log(this.chartData);
+        } else {
+            console.log("You selected the background!");            
+        }  
+
       }
     },
     //example para ti
-    chartData: {
+    
+  }),
+  
+  async mounted () {
+    this.loaded = false
+
+    try {
+
+      const { userlist } = await fetch('/api/project')
+      //you need to replace by project list
+      this.chartData = {
         labels: [ 'Project1', 'P2', 'P3'],
         datasets: [
           {
@@ -38,14 +49,36 @@ export default {
           }
         ]
       }
-  }),
-  
-  async mounted () {
-    this.loaded = false
 
-    try {
-      const { userlist } = await fetch('/api/userlist')
-      this.chartdata = userlist
+      this.chartOptions = {
+      onClick: (event, elements) => {
+        if (elements.length != 0) {
+            var position = elements[0].index;
+            var label_clicked = this.chartData.labels[position]
+            try {
+              //const { project  } = await fetch('/api/'+label_clicked)
+              this.chartData = {
+        labels: [ 'Client1', 'Client2', 'Client3'],
+        datasets: [
+          {
+            label: label_clicked,
+            backgroundColor: '#f877',
+            data: [40, 20, 12]
+          }
+        ]
+      }
+
+
+              }catch(e){
+                console.error(e)
+              }
+            }
+           else {
+            console.log("You selected the background!");            
+        }  
+
+      }
+    },
 
       this.loaded = true
     } catch (e) {
