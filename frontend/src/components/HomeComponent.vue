@@ -4,10 +4,11 @@
     <div class="row">
       <div class="col-md-6">
         <div class="d-flex justify-content-between align-items-center">
-          <h2 class="m-0 proyectos-title">          </h2>
+          <h2 class="m-0 proyectos-title"></h2>
           <div>
             <button class="btn btn-primary me-2" @click="createProject">Crear proyecto</button>
             <button v-if="isAdmin" class="btn btn-primary" @click="viewClients">Ver Clientes</button>
+            <button class="btn btn-primary" @click="projectStats">Project Stats</button>
           </div>
         </div>
         <div v-if="projects.length > 0" class="card">
@@ -77,8 +78,11 @@ import { userInfo } from "os";
       const viewClients = () => {
         router.push('/SeeClient') // redirige vers la page '/ViewClients'
       }
+      const projectStats = () => {
+        router.push('/ProjectCharts') // redirige vers la page '/ProjectStats'
+      }
       // Récupère la valeur de l'utilisateur connecté depuis le cookie et détermine s'il est admin
-      return { createProject, viewClients, isAdmin, username}
+      return { createProject, viewClients,projectStats, isAdmin, username}
     },
     data() {
       return {

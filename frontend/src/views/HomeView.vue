@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" style="width: 200px;">
-    <TaskUser msg="Test de site"/>
+    <HomeComponent msg="Test de site"/>
   </div>
 </template>
 
@@ -16,10 +16,11 @@ import LoginComponent from '@/components/LoginCompo.vue';
 import TaskUser from '@/components/TaskUser.vue';
 import seeprofile from '@/components/seeprofile.vue'; // @ is an alias to /src
 
+
 export default defineComponent({
   name: 'HomeView',
   components: {
-    TaskUser,
-  },
+    HomeComponent
+},
 });
 </script>

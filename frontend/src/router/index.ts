@@ -5,9 +5,15 @@ import SeeClient from '@/components/SeeClient.vue'
 import LoginCompoVue from '@/components/LoginCompo.vue'
 import Proyectos from '@/components/SeeProyecto.vue'
 import ResumeProyectoVue from '@/components/ResumeProyecto.vue'
+import ChartsComponent from '@/components/ChartsComponent.vue';
 
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/ProjectCharts',
+    name: 'ChartsComponent',
+    component: ChartsComponent,
+  },
   {
     path: '/',
     name: 'home',
