@@ -42,6 +42,18 @@ export class Tarea {
         console.log(req.query);
         let condicion = "true";
         if(req.query.id_proyecto!= undefined) condicion += " AND id_proyecto = '" + req.query.id_proyecto + "'";
+        if(req.query.id_cliente!= undefined) {
+            condicion += " AND id_proyecto IN (SELECT id FROM proyectos WHERE id_cliente = '" + req.query.id_cliente + "')";
+        }
+        if(req.query.id_usuario!= undefined){
+            condicion += " AND id_proyecto IN (SELECT id_proyecto FROM usuarios_proyectos WHERE id_usuario = '" + req.query.id_usuario + "')";
+        }
+        if(req.query.inicio!= undefined){
+            condicion += " AND id IN (SELECT id_tarea FROM tiempos WHERE inicio >= '" + req.query.inicio + "')";
+        }
+        if(req.query.final!= undefined){
+            condicion += " AND id IN (SELECT id_tarea FROM tiempos WHERE final <= '" + req.query.final + "')";
+        }
         dbConn.query("SELECT * from tareas WHERE " + condicion, function (err: any, res: any) {
             if (err) {
                 console.log("error: ", err);
