@@ -2,6 +2,10 @@ import express, { Express, Request, Response } from 'express';
 const router = express.Router();
 import * as tiempoController from '../controllers/tiempo.controller';
 
+
+// Consultas
+router.get('/consultas',tiempoController.consultas);
+
 // Devuelva todos los usuarios
 
 router.get('/', tiempoController.findAll);

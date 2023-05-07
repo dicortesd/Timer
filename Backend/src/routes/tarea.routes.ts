@@ -3,7 +3,6 @@ const router = express.Router();
 import * as tareaController from '../controllers/tarea.controller';
 
 // Devuelva todos los usuarios
-
 router.get('/', tareaController.findAll);
 
 // Cree un nuevo usuario
@@ -17,5 +16,6 @@ router.put('/:id', tareaController.update);
 
 // Delete a usuario with id
 router.delete('/:id', tareaController.remove);
+
 
 export = router

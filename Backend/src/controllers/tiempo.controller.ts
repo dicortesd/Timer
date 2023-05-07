@@ -71,3 +71,16 @@ export const remove = function(req:Request, res:Response) {
         }
     });
 };
+
+export const consultas = function(req: Request,res: Response){
+    Tiempo.consultas(req, function(err: Error,resultado: Response){
+        console.log('controller');
+        if (err){
+            res.send(err);
+        }
+        else{
+            console.log('res',resultado);
+            res.send(resultado);
+        }
+    });
+};
