@@ -80,10 +80,13 @@ export class Tiempo {
     static consultas(req:any, result: any) {
         console.log(req.query);
         let condicion = "ti.final IS NOT NULL";
-        let from = "tiempos ti LEFT JOIN tareas t ON ti.id_tarea=t.id";
+        let from = "tiempos ti LEFT JOIN tareas t ON ti.id_tarea=t.id LEFT JOIN categorias cat ON t.id_categoria=cat.id";
         let select = "";
         let strquery = "";
         let strTiempo="SUM(TIMESTAMPDIFF(HOUR, ti.inicio, ti.final)) as tiempo";
+        let strCosto="SUM(TIMESTAMPDIFF(HOUR, ti.inicio, ti.final)*cat.valor_hora) as costo";
+        let variables=strTiempo + ', ' + strCosto; 
+
         if(req.query.id_proyecto!= undefined) condicion += " AND t.id_proyecto = '" + req.query.id_proyecto + "'";
         if(req.query.id_cliente!= undefined) {
             condicion += " AND t.id_proyecto IN (SELECT id FROM proyectos WHERE id_cliente = '" + req.query.id_cliente + "')";
@@ -105,15 +108,15 @@ export class Tiempo {
         }
         switch(req.query.tipo){
             case "proyecto":
-                select = "pr.id, pr.nombre, " + strTiempo;
+                select = "pr.id, pr.nombre, " + variables;
                 from += " LEFT JOIN proyectos pr ON t.id_proyecto = pr.id";
                 break;
             case "cliente":
-                select = "cl.id, cl.nombre, " + strTiempo;
+                select = "cl.id, cl.nombre, " + variables;
                 from += " LEFT JOIN proyectos pr ON t.id_proyecto = pr.id LEFT JOIN clientes cl ON pr.id_cliente=cl.id";
                 break;
             case "usuario":
-                select = "us.id, CONCAT(us.nombre,' ',us.apellido) as nombre, " + strTiempo;
+                select = "us.id, CONCAT(us.nombre,' ',us.apellido) as nombre, " + variables;
                 from += " LEFT JOIN usuarios us ON ti.id_usuario = us.id";
                 break;
             default:
