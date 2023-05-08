@@ -7,6 +7,7 @@
 <script>
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import axios from 'axios';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -36,16 +37,25 @@ export default {
     this.loaded = false
 
     try {
-
-      const { userlist } = await fetch('/api/project')
+      const response = await axios.get('http://localhost:3000/tiempos/consultas?tipo=proyecto');
+      //const { userlist } = await fetch('/api/project');
       //you need to replace by project list
+      console.log(response);
+      let labels=[];
+      let tiempo=[];
+      for(var i in response.data){
+        console.log(response.data[i]);
+        labels.push(response.data[i].nombre);
+        tiempo.push(response.data[i].tiempo);
+      }
+      console.log(labels);
       this.chartData = {
-        labels: [ 'Project1', 'P2', 'P3'],
+        labels: labels,
         datasets: [
           {
-            label: 'Time',
+            label: 'Time in hours',
             backgroundColor: '#f87967',
-            data: [40, 20, 12]
+            data: tiempo
           }
         ]
       }
