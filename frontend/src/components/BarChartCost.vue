@@ -37,7 +37,7 @@ export default {
     this.loaded = false
 
     try {
-      const response = await axios.get('http://localhost:3000/tiempos/consultas?tipo=proyecto');
+      let response = await axios.get('http://localhost:3000/tiempos/consultas?tipo=proyecto');
       //const { userlist } = await fetch('/api/project');
       //you need to replace by project list
       console.log(response);
@@ -64,26 +64,41 @@ export default {
       }
 
       this.chartOptions = {
-        onClick: (event, elements) => {
+        onClick: async(event, elements) => {
           if (elements.length != 0) {
             var position = elements[0].index;
             var label_clicked = this.chartData.labels[position];
             console.log(this.chartData.ids[position]);
+            
             try {
-              //const { project  } = await fetch('/api/'+label_clicked)
+              let response = await axios.get('http://localhost:3000/tiempos/consultas?tipo=usuario&id_proyecto='+ this.chartData.ids[position]);
+              console.log(response,this.id);
+            
+              let ids=[];
+              let labels=[];
+              let costos=[];
+              for(var i in response.data){
+                console.log(response.data[i]);
+                ids.push(response.data[i].id);
+                labels.push(response.data[i].nombre);
+                costos.push(response.data[i].costo);
+              }
               this.chartData = {
-                labels: [ 'Client1', 'Client2', 'Client3'],
+                ids: ids,
+                labels: labels,
                 datasets: [
                   {
                     label: label_clicked,
                     backgroundColor: '#f877',
-                    data: [40, 20, 12]
+                    data: costos
                   }
                 ]
               }
+            
             }catch(e){
               console.error(e)
             }
+            
           }
           else {
             console.log("You selected the background!");            

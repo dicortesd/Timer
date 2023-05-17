@@ -4,8 +4,8 @@
     <div class="task-container">
       <div v-for="(task, index) in tasks" :key="index" class="task-square">
         <div class="task-header">
-          <span class="task-name">{{ task.name }}</span>
-          <time-counter :task="task" :key="task.name" @update:task="updateTask" class="task-time-counter"></time-counter>
+          <span class="task-name">{{ task.nombre }}</span>
+          <time-counter :task="task" :key="task.nombre" @update:task="updateTask" class="task-time-counter"></time-counter>
         </div>
         <div class="task-body">
           {{ task.time }}
@@ -17,6 +17,8 @@
 
 <script>
 import TimeCounter from "./TimeCounter.vue";
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default {
   components: {
@@ -25,12 +27,28 @@ export default {
   data() {
     return {
       tasks: [
-        { name: "Task 1", time: 0 },
-        { name: "Task 2", time: 0 },
-        { name: "Task 3", time: 0 },
+        { nombre: "Task 1", time: 0 },
+        { nombre: "Task 2", time: 0 },
+        { nombre: "Task 3", time: 0 },
       ],
+      id_proyecto: this.$route.params.id_proyecto
     };
   },
+  created: async function(){
+    const userCookie = Cookies.get('user');
+    const user = userCookie ? JSON.parse(userCookie) : null;
+    console.log('Ver si llega');
+    try {
+      // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+      const response = await axios.get('http://localhost:3000/tareas/?id_proyecto='+this.id_proyecto+'&id_usuario='+user.id);
+      console.log(response);
+      console.log(response.data);
+      this.tasks=response.data;
+    } catch (error) {
+      console.error(error);
+    }
+
+    },
   methods: {
     updateTask(updatedTask) {
       let taskIndex = this.tasks.findIndex((task) => task.name === updatedTask.name);

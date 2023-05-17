@@ -17,7 +17,8 @@
         <router-link to="/" class="btn btn-link">
           <font-awesome-icon :icon="['fas', 'home']"/>
         </router-link>
-        <a href="#"><font-awesome-icon :icon="['fas', 'chart-pie']"/></a>
+        <a v-if="isAdmin" href="/ProjectCharts"><font-awesome-icon :icon="['fas', 'chart-pie']"/></a>
+        <a v-else href="/Login"><font-awesome-icon :icon="['fas', 'user']"/></a>
         <a href="#"><font-awesome-icon :icon="['fas', 'envelope']"/></a>
         <a href="#" @click="showPopup = !showPopup"><font-awesome-icon :icon="['fas', 'user']"/></a>
       </div>

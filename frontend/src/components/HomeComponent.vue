@@ -14,9 +14,9 @@
         <div v-if="projects.length > 0" class="card">
           <div class="card-body">
             <div v-for="(project, index) in projects" :key="index">
-              <h5 class="card-title">{{ project.name }}</h5>
-              <p class="card-text">{{ project.description }}</p>
-              <a :href="`/projects/${project.id}`" class="btn btn-primary">Ver Proyecto</a>
+              <h5 class="card-title">{{ project.nombre }}</h5>
+              <p class="card-text">{{ project.descripcion }}</p>
+              <a :href="`/tasksuser/${project.id}`" class="btn btn-primary">Ver Proyecto</a>
             </div>
           </div>
         </div>
@@ -51,7 +51,8 @@
   import { defineComponent } from "vue";
   import { useRouter } from 'vue-router';
   import Cookies from 'js-cookie';
-import { userInfo } from "os";
+  import { userInfo } from "os";
+  import axios from 'axios';
 
 
   
@@ -89,18 +90,18 @@ import { userInfo } from "os";
         projects: [
           {
             id: 1,
-            name: "Project 1",
-            description: "This is a description for Project 1.",
+            nombre: "Project 1",
+            descripcion: "This is a description for Project 1.",
           },
           {
             id: 2,
-            name: "Project 2",
-            description: "This is a description for Project 2.",
+            nombre: "Project 2",
+            descripcion: "This is a description for Project 2.",
           },
           {
             id: 3,
-            name: "Project 3",
-            description: "This is a description for Project 3.",
+            nombre: "Project 3",
+            descripcion: "This is a description for Project 3.",
           },
         ],
         activity: [
@@ -121,6 +122,21 @@ import { userInfo } from "os";
           },
         ],
       };
+    },
+    created: async function(){
+      const userCookie = Cookies.get('user');
+      const user = userCookie ? JSON.parse(userCookie) : null;
+      console.log('Ver si llega');
+      try {
+        // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+        const response = await axios.get('http://localhost:3000/proyectos/?id_usuario='+user.id);
+        console.log(response);
+        console.log(response.data);
+        this.projects=response.data;
+      } catch (error) {
+        console.error(error);
+      }
+
     },
     methods: {
       formatDate(date: string) {

@@ -6,7 +6,7 @@ import LoginCompoVue from '@/components/LoginCompo.vue'
 import Proyectos from '@/components/SeeProyecto.vue'
 import ResumeProyectoVue from '@/components/ResumeProyecto.vue'
 import ChartsComponent from '@/components/ChartsComponent.vue';
-
+import TaskUserVue from '@/components/TaskUser.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -49,6 +49,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/resume',
     name: 'resume',
     component: ResumeProyectoVue 
+  },
+  {
+    path: '/tasksuser/:id_proyecto',
+    name: 'taskuser',
+    component: TaskUserVue 
   }
 ]
 
