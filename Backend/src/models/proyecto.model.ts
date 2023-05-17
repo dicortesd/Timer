@@ -71,6 +71,8 @@ export class Proyecto {
         console.log(query);
         let condicion = "true";
         if(query.id_cliente!= undefined) condicion += " AND pr.id_cliente = '" + query.id_cliente + "'";
+        if(query.id_usuario!= undefined) condicion += " AND pr.id IN (SELECT id_proyecto FROM usuarios_proyectos WHERE id_usuario = '" + query.id_usuario + "')";
+
         dbConn.query("SELECT pr.*, (SELECT GROUP_CONCAT(up.id_usuario SEPARATOR ',') FROM usuarios_proyectos up WHERE up.id_proyecto=pr.id) as usuarios FROM proyectos pr WHERE " + condicion, function (err: any, res: any) {
             if (err) {
                 console.log("error: ", err);
