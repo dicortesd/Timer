@@ -27,9 +27,9 @@ export default {
   data() {
     return {
       tasks: [
-        { nombre: "Task 1", time: 0 },
-        { nombre: "Task 2", time: 0 },
-        { nombre: "Task 3", time: 0 },
+        { nombre: "Task 1", time: 0, id:"" },
+        { nombre: "Task 2", time: 0, id:"" },
+        { nombre: "Task 3", time: 0, id:"" },
       ],
       id_proyecto: this.$route.params.id_proyecto
     };
@@ -37,6 +37,7 @@ export default {
   created: async function(){
     const userCookie = Cookies.get('user');
     const user = userCookie ? JSON.parse(userCookie) : null;
+    const task = this.task;
     console.log('Ver si llega');
     try {
       // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
@@ -47,7 +48,30 @@ export default {
     } catch (error) {
       console.error(error);
     }
+    try {
 
+      for(let i=0; i<this.tasks.length;i++){
+        console.log(this.tasks[i].id);
+        const response = await axios.get('http://localhost:3000/tiempos/consultas?tipo=usuario&id_tarea='+this.tasks[i].id+'&id_usuario='+user.id);
+        console.log(response);
+        console.log(response.data);
+        if(response.data.length==0){
+          this.tasks[i].time=0;
+        }
+        else{ 
+          this.tasks[i].time=response.data[0].tiempo;
+        }
+      }
+      console.log(this.tasks);
+      // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+      /*const response = await axios.get('http://localhost:3000/tiempos/consultas?tipo=usuario&id_tarea='+task.id+'&id_usuario='+user.id);
+      console.log(response);
+      console.log(response.data);
+      this.tasks.time=response.data.tiempo;
+      */
+    } catch (error) {
+      console.error(error);
+    }
     },
   methods: {
     updateTask(updatedTask) {

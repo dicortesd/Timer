@@ -47,6 +47,7 @@ export default {
     },
     updateTime() {
       this.elapsedTime = Date.now() - this.startTime;
+      console.log(this.elapsedTime);
     },
   },
 };

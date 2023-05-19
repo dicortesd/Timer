@@ -48,7 +48,7 @@ export default {
         console.log(response.data[i]);
         ids.push(response.data[i].id);
         labels.push(response.data[i].nombre);
-        tiempo.push(response.data[i].tiempo);
+        tiempo.push(response.data[i].tiempo/3600);
       }
       console.log(labels);
       this.chartData = {
@@ -78,7 +78,7 @@ export default {
               for(var i in response.data){
                 console.log(response.data[i]);
                 labels.push(response.data[i].nombre);
-                tiempo.push(response.data[i].tiempo);
+                tiempo.push(response.data[i].tiempo/3600);
               }
               console.log(labels);
               this.chartData = {
