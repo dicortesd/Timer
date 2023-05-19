@@ -83,7 +83,7 @@ export class Tiempo {
         let from = "tiempos ti LEFT JOIN tareas t ON ti.id_tarea=t.id LEFT JOIN categorias cat ON t.id_categoria=cat.id";
         let select = "";
         let strquery = "";
-        let strTiempo="SUM(TIMESTAMPDIFF(HOUR, ti.inicio, ti.final)) as tiempo";
+        let strTiempo="SUM(TIMESTAMPDIFF(SECOND, ti.inicio, ti.final)) as tiempo";
         let strCosto="SUM(TIMESTAMPDIFF(HOUR, ti.inicio, ti.final)*cat.valor_hora) as costo";
         let variables=strTiempo + ', ' + strCosto; 
 
@@ -99,6 +99,9 @@ export class Tiempo {
         }
         if(req.query.final!= undefined){
             condicion += " AND ti.final <= '" + req.query.final + "'";
+        }
+        if(req.query.id_tarea!= undefined){
+            condicion += " AND ti.id_tarea = '" + req.query.id_tarea + "'";
         }
         if(req.query.tipo == undefined){
             let err={error:true, message: 'Por favor provea todos los campos requeridos.'};
