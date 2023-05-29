@@ -65,7 +65,7 @@ export class Cliente {
         dbConn.query("DELETE FROM clientes WHERE id = ?", [id], function (err: any, res: any) {
             if (err) {
                 console.log("error: ", err);
-                result(null, err);
+                result(err);
             }
             else {
                 result(null, res);

@@ -1,4 +1,8 @@
 import express from 'express';
+//Se metió el Cors porque no dejaba usar el DELETE.
+//https://www.twilio.com/blog/add-cors-support-express-typescript-api
+//https://expressjs.com/en/resources/middleware/cors.html#configuration-options
+import cors from 'cors';
 import bodyParser from 'body-parser';
 
 // create express app
@@ -30,9 +34,10 @@ import {default as tiempoRoutes} from './routes/tiempo.routes';
 // https://stackoverflow.com/a/34647929
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Options");
 	next();
   });
+app.options('*', cors());
 // using as middleware
 app.use('/usuarios', usuarioRoutes);
 app.use('/clientes', clienteRoutes);

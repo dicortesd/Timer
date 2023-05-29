@@ -63,8 +63,9 @@ export const update = function(req:Request, res:Response) {
 
 export const remove = function(req:Request, res:Response) {
     Cliente.remove( req.params.id, function(err: Error, cliente: Cliente) {
+        console.log(Cliente);
         if (err)  {
-            res.send(err);
+            res.send({error: err});
         }
         else{
             res.json({ error:false, message: 'Cliente borrado exitosamente' });

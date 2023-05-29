@@ -41,12 +41,15 @@ export class Tarea {
     static findAll(req:any, result: any) {
         console.log(req.query);
         let condicion = "true";
+        let condicionSubquery = "id_tarea=tareas.id";
+
         if(req.query.id_proyecto!= undefined) condicion += " AND id_proyecto = '" + req.query.id_proyecto + "'";
         if(req.query.id_cliente!= undefined) {
             condicion += " AND id_proyecto IN (SELECT id FROM proyectos WHERE id_cliente = '" + req.query.id_cliente + "')";
         }
         if(req.query.id_usuario!= undefined){
             condicion += " AND id_proyecto IN (SELECT id_proyecto FROM usuarios_proyectos WHERE id_usuario = '" + req.query.id_usuario + "')";
+            condicionSubquery += " AND id_usuario='" + req.query.id_usuario + "'";
         }
         if(req.query.inicio!= undefined){
             condicion += " AND id IN (SELECT id_tarea FROM tiempos WHERE inicio >= '" + req.query.inicio + "')";
@@ -54,7 +57,7 @@ export class Tarea {
         if(req.query.final!= undefined){
             condicion += " AND id IN (SELECT id_tarea FROM tiempos WHERE final <= '" + req.query.final + "')";
         }
-        dbConn.query("SELECT * from tareas WHERE " + condicion, function (err: any, res: any) {
+        dbConn.query("SELECT *, (SELECT SUM(TIMESTAMPDIFF(SECOND,inicio,final)) FROM tiempos WHERE " + condicionSubquery + ") as time from tareas WHERE " + condicion, function (err: any, res: any) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);
