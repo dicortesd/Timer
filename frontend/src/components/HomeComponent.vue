@@ -6,7 +6,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2 class="m-0 proyectos-title"></h2>
           <div>
-            <button class="btn btn-primary me-2" @click="createProject">Crear proyecto</button>
+            <button v-if="isAdmin" class="btn btn-primary me-2" @click="createProject">Crear proyecto</button>
             <button v-if="isAdmin" class="btn btn-primary" @click="viewClients">Ver Clientes</button>
             <button class="btn btn-primary" @click="projectStats">Project Stats</button>
           </div>
@@ -29,9 +29,9 @@
         <div v-if="activity.length > 0" class="card">
           <div class="card-body">
             <div v-for="(item, index) in activity" :key="index">
-              <h5 class="card-title">{{ item.title }}</h5>
-              <p class="card-text">{{ item.description }}</p>
-              <p class="card-text"><small class="text-muted">{{ formatDate(item.date) }}</small></p>
+              <hr />
+              <h4 class="card-title">La tarea {{ item.nombre }} ha sido añadida al proyecto {{ item.id_proyecto }}</h4>
+              <p class="card-text">Con la siguiente descripción: {{ item.observaciones }}</p>
             </div>
           </div>
         </div>
@@ -106,19 +106,19 @@
         ],
         activity: [
           {
-            title: "Project 1 updated",
-            description: "Project 1 status updated to 'In progress'",
-            date: "2023-04-18",
+            id_proyecto: "Project 1 updated",
+            nombre: "Project 1 status updated to 'In progress'",
+            observaciones: "2023-04-18",
           },
           {
-            title: "New task added to Project 3",
-            description: "Task 'Design homepage' added to Project 3",
-            date: "2023-04-17",
+            id_proyecto: "New task added to Project 3",
+            nombre: "Task 'Design homepage' added to Project 3",
+            observaciones: "2023-04-17",
           },
           {
-            title: "Task completed in Project 2",
-            description: "Task 'Implement login functionality' completed in Project 2",
-            date: "2023-04-16",
+            id_proyecto: "Task completed in Project 2",
+            nombre: "Task 'Implement login functionality' completed in Project 2",
+            observaciones: "2023-04-16",
           },
         ],
       };
@@ -133,6 +133,23 @@
         console.log(response);
         console.log(response.data);
         this.projects=response.data;
+      } catch (error) {
+        console.error(error);
+      }
+
+      try {
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+        let formatedStartTime =new Date(date).toISOString();
+        formatedStartTime=formatedStartTime.replace(/^([0-9:\-.]*)T([0-9:\-.]*)Z$/,'$1 $2');
+
+
+
+        // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
+        const response = await axios.get('http://localhost:3000/tareas/?inicio='+formatedStartTime);
+        console.log(response);
+        console.log(response.data);
+        this.activity=response.data;
       } catch (error) {
         console.error(error);
       }
@@ -157,7 +174,9 @@
   align-items: center;
   padding: 20px;
 }
-
+h4{
+  font-weight: bold;
+}
 h1 {
   margin-bottom: 20px;
   font-size: 2rem;

@@ -1,17 +1,39 @@
 <template>
   <div>
     <h1>{{ projectName }} {{ id }}</h1>
-    <button type="button" @click="showForm = true">Añadir Tarea</button>
+    <button class="btn btn-success" @click="showForm = !showForm">Añadir Tarea</button>
+    <button class="btn btn-primary" @click="showFormCategoria = !showFormCategoria">Añadir Categor&iacute;a</button>
     <div v-if="showForm" class="box-form">
       <form @submit.prevent="addTask">
-        <label for="taskName">Nombre de la tarea :</label>
-        <input type="text" id="taskName" v-model="newTask.nombre" required />
-        <select id="categoria" class="form-control select-short" v-model="newTask.id_categoria" required>
+        <div class="form-group">
+          <label for="taskName">Nombre de la tarea :</label>
+          <input type="text" class="form-control" id="taskName" v-model="newTask.nombre" required />
+        </div>
+        <div class="form-group">
+          <label for="categoria">Categor&iacute;a :</label>
+          <select id="categoria" class="form-control" v-model="newTask.id_categoria" required>
                 <option value="">-- Seleccionar una categoria --</option>
                 <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{ categoria.nombre }}</option>
-        </select>
-        <label for="taskDetails">Observaciones :</label>
-        <textarea id="taskDetails" v-model="newTask.observaciones" required></textarea>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="taskDetails">Observaciones :</label>
+          <textarea class="form-control" id="taskDetails" v-model="newTask.observaciones" required></textarea>
+        </div>
+        <button type="submit">Añadir</button>
+      </form>
+    </div>
+    <div v-if="showFormCategoria" class="box-form">
+      <form @submit.prevent="addCategory">
+        <div class="form-group">
+          <label for="categoryName">Nombre de la categor&iacute;a :</label>
+          <input type="text" class="form-control" id="categoryName" v-model="newCategory.nombre" required />
+        </div>
+        <div class="form-group">
+          <label for="valor_hora">Valor hora :</label>
+          <input type="text" class="form-control" id="valor_hora" v-model="newCategory.valor_hora" required />
+
+        </div>
         <button type="submit">Añadir</button>
       </form>
     </div>
@@ -30,6 +52,7 @@
           <div class="task-name">{{ task.nombre }}</div>
           <div class="task-category">{{ task.id_categoria }}</div>
           <div class="task-details">{{ task.observaciones }}</div>
+          <button class="btn btn-danger btn-block mr-2" @click="deleteTask(task.id)">borrar</button>
         </div>
       </div>
     </div>
@@ -60,17 +83,23 @@ export default defineComponent({
       participants: [{id: 1, nombre: "Participant 1", apellido: "Apellido 1"}, {id: 2, nombre: "Participant 2", apellido: "Apellido 2"}, {id: 3, nombre: "Participant 3", apellido: "Apellido 3"}],
       tasks: [] as Task[],
       showForm: false,
+      showFormCategoria:false,
       categorias: [
-      { id: "1", nombre: 'Hacer' },
-      { id: "2", nombre: 'En curso' },
-      { id: "3", nombre: 'Terminado' }
-    ],
+        { id: "1", nombre: 'Hacer' },
+        { id: "2", nombre: 'En curso' },
+        { id: "3", nombre: 'Terminado' }
+      ],
       newTask: {
         id: "",
         nombre: "",
         id_categoria: "",
         observaciones: "",
         id_proyecto: ""
+      },
+      newCategory: {
+        id: "",
+        nombre: "",
+        valor_hora: ""
       },
       id: this.$route.params.id
     };
@@ -121,8 +150,12 @@ export default defineComponent({
       this.newTask.observaciones = "";
       this.showForm = false;
     },
-    deleteTask(index: number) {
-      this.tasks.splice(index, 1);
+    deleteTask:async function(index: string) {
+      //this.tasks.splice(index, 1);
+      console.log(index);
+      const response = await fetch('http://localhost:3000/tareas/'+index,{method: 'DELETE'});
+      console.log(response);
+      this.getTasks();
     },
 
   getTasks: async function() {
@@ -148,6 +181,20 @@ export default defineComponent({
         console.error(error);
       }
     },
+    addCategory:async function () {
+      console.log(this.id as string);
+      //this.tasks.push({ ...this.newTask });
+      await axios.post('http://localhost:3000/categorias/', this.newCategory);
+      const response = await axios.get('http://localhost:3000/categorias/');
+      console.log(response);
+      console.log(response.data);
+      this.categorias=response.data;
+
+      this.newCategory.nombre = "";
+      this.newCategory.valor_hora = "";
+      this.showFormCategoria = false;
+    }
+
   },
 });
 </script>
@@ -219,14 +266,15 @@ box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .box-form {
+  text-align: left;
   margin : auto;
   padding: 20px;
   background-color: #f1f1f1;
   border-radius: 10px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-  height: 250px;
+  /*height: 250px;*/
   width: 400px;
-  }
+}
 
   .select-short {
   margin : auto;

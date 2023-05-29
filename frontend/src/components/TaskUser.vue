@@ -5,7 +5,7 @@
       <div v-for="(task, index) in tasks" :key="index" class="task-square">
         <div class="task-header">
           <span class="task-name">{{ task.nombre }}</span>
-          <time-counter :task="task" :key="task.nombre" @update:task="updateTask" class="task-time-counter"></time-counter>
+          <time-counter :task="task" :key="task.id" :id_usuario="id_usuario" @update:task="updateTask" class="task-time-counter"></time-counter>
         </div>
         <div class="task-body">
           {{ task.time }}
@@ -31,13 +31,15 @@ export default {
         { nombre: "Task 2", time: 0, id:"" },
         { nombre: "Task 3", time: 0, id:"" },
       ],
-      id_proyecto: this.$route.params.id_proyecto
+      id_proyecto: this.$route.params.id_proyecto,
+      id_usuario: ''
     };
   },
   created: async function(){
     const userCookie = Cookies.get('user');
     const user = userCookie ? JSON.parse(userCookie) : null;
     const task = this.task;
+    this.id_usuario=user.id;
     console.log('Ver si llega');
     try {
       // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
@@ -48,34 +50,11 @@ export default {
     } catch (error) {
       console.error(error);
     }
-    try {
-
-      for(let i=0; i<this.tasks.length;i++){
-        console.log(this.tasks[i].id);
-        const response = await axios.get('http://localhost:3000/tiempos/consultas?tipo=usuario&id_tarea='+this.tasks[i].id+'&id_usuario='+user.id);
-        console.log(response);
-        console.log(response.data);
-        if(response.data.length==0){
-          this.tasks[i].time=0;
-        }
-        else{ 
-          this.tasks[i].time=response.data[0].tiempo;
-        }
-      }
-      console.log(this.tasks);
-      // Aquí es que se hace la conexión con el backend, pasándole la URL donde está corriendo.
-      /*const response = await axios.get('http://localhost:3000/tiempos/consultas?tipo=usuario&id_tarea='+task.id+'&id_usuario='+user.id);
-      console.log(response);
-      console.log(response.data);
-      this.tasks.time=response.data.tiempo;
-      */
-    } catch (error) {
-      console.error(error);
-    }
+    
     },
   methods: {
     updateTask(updatedTask) {
-      let taskIndex = this.tasks.findIndex((task) => task.name === updatedTask.name);
+      let taskIndex = this.tasks.findIndex((task) => task.id === updatedTask.id);
       this.tasks[taskIndex].time = updatedTask.time;
     },
   },

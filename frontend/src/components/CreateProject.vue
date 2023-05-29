@@ -30,13 +30,7 @@
                 <label for="descripcion">Descripción:</label>
                 <textarea id="descripcion" class="form-control" v-model="descripcion"></textarea>
               </div>
-                <div class="form-group">
-                  <label for="projectDueDate">Fecha de entrega:</label>
-                  <select id="projectDueDate" class="form-control" v-model="projectDueDate">
-                    <option value="">-- Seleccionar una fecha --</option>
-                    <option v-for="date in dueDates" :key="date">{{ date }}</option>
-                  </select>
-                </div>
+                
               <button type="submit" class="btn btn-primary btn-block mt-4">Crear</button>
             </form>
           </div>
@@ -44,27 +38,20 @@
       </div>
       <div class="col-md-5 offset-md-1">
         <div class="card">
-            <div class="card-header">
-              <h5 class="mb-0">Información adicional</h5>
-                <div class="form-group">
-                  <label for="projectGoals">Objetivos:</label>
-                  <select id="projectGoals" class="form-control" v-model="projectGoals">
-                  <option value="">-- Seleccionar un objetivo --</option>
-                  <option v-for="objetivo in Objetivos" :key="objetivo.id" :value="objetivo.id">{{ objetivo.name }}</option>
-                </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="projectStatis">Estado:</label>
-                <select id="projectStatus" class="form-control" v-model="estado" required>
-                  <option value="">-- Seleccionar un estado--</option>
-                  <option v-for="estado in estados" :key="estado.id" :value="estado.id">{{ estado.nombre }}</option>
-                </select>
-              </div>
-              </div>
-            </div>
+          <div class="card-header">
+            <h5 class="mb-0">Información adicional</h5>
+          </div>
+          <div class="form-group">
+            <label for="projectStatis">Estado:</label>
+            <select id="projectStatus" class="form-control" v-model="estado" required>
+              <option value="">-- Seleccionar un estado--</option>
+              <option v-for="estado in estados" :key="estado.id" :value="estado.id">{{ estado.nombre }}</option>
+            </select>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 
